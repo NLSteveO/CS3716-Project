@@ -85,10 +85,10 @@ public class GameLauncher extends JFrame{
     
     public JMenuBar menuBar(){
     	JMenuBar bar = new JMenuBar();
-    	bar.add(createFileMenu);
-    	bar.add(createEditMenu);
-    	bar.add(createCharMenu);
-    	bar.add(createHelpMenu);
+    	bar.add(createFileMenu());
+    	bar.add(createEditMenu());
+    	bar.add(createCharMenu());
+    	bar.add(createHelpMenu());
     	return bar;
     }
     

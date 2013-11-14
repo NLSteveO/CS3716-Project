@@ -10,11 +10,10 @@ import java.awt.EventQueue;
 public class GameLauncher extends JFrame{
 
 	private static JMenuBar menu;
+	private JMenu file, edit, character, help;
+	private JMenuItem nGame, save, load, exit, edit, nChar, eChar, rules, about;
 	
     public GameLauncher(){
-    	JPanel main = new JPanel();
-    	main.setSize(new Dimension(499,499));
-    	add(main);
     	
     	menu = new JMenuBar();
     	menu.add(createFileMenu());
@@ -24,83 +23,82 @@ public class GameLauncher extends JFrame{
     }
     
     public JMenu createFileMenu(){
-    	JMenu file = new JMenu("File");
+    	file = new JMenu("File");
         file.add(createNewGame());
+        file.addSeperator();
         file.add(createSaveItem());
         file.add(createLoadItem());
+        file.addSeperator();
         file.add(createExitItem());
         return file;
     }
     
     public JMenuItem createNewGame(){
-    	JMenuItem nGame = new JMenuItem("New Game");
+    	nGame = new JMenuItem("New Game");
     	return nGame;
     }
     
     public JMenuItem createSaveItem(){
-    	JMenuItem save = new JMenuItem("Save");
+    	save = new JMenuItem("Save");
     	return save;
     }
     
     public JMenuItem createLoadItem(){
-    	JMenuItem load = new JMenuItem("Load");
+    	load = new JMenuItem("Load");
     	return load;
     }
     
     public JMenuItem createExitItem(){
-    	JMenuItem exit = new JMenuItem("Exit");
+    	exit = new JMenuItem("Exit");
     	return exit;
     }
     
     public JMenu createEditMenu(){
-    	JMenu edit = new JMenu("Edit");
+    	edit = new JMenu("Edit");
     	edit.add(createEditItem());
     	return edit;
     }
     
     public JMenuItem createEditItem(){
-    	JMenuItem edit = new JMenuItem("Edit");
+    	edit = new JMenuItem("Edit");
     	return edit;
     }
     
     public JMenu createCharMenu(){
-    	JMenu character = new JMenu("Character");
+    	character = new JMenu("Character");
     	character.add(createNewChar());
     	character.add(createEditChar());
     	return character;
     }
     
     public JMenuItem createNewChar(){
-    	JMenuItem nChar = new JMenuItem("New Character");
+    	nChar = new JMenuItem("New Character");
     	return nChar;
     }
     
     public JMenuItem createEditChar(){
-    	JMenuItem eChar = new JMenuItem("Edit Character");
+    	eChar = new JMenuItem("Edit Character");
     	return eChar;
     }
     
     public JMenu createHelpMenu(){
-    	JMenu help = new JMenu("Help");
+    	help = new JMenu("Help");
         help.add(createRulesFrame());
         help.add(createAboutFrame());
         return help;
     }
     
     public JMenuItem createRulesFrame(){
-    	JMenuItem rules = new JMenuItem("Rules");
+    	rules = new JMenuItem("Rules");
     	return rules;
     }
     
     public JMenuItem createAboutFrame(){
-    	JMenuItem about = new JMenuItem("About");
+    	about = new JMenuItem("About");
     	return about;
     }
         
     public static void main(String[] args){
-    	EventQueue.invokeLater(
-                new Runnable() {
-                   public void run() {
     	GameLauncher game = new GameLauncher();
     	JFrame frame = new JFrame();
     	frame.add(game);
@@ -109,7 +107,5 @@ public class GameLauncher extends JFrame{
         frame.setTitle("Game Launcher");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-                   }
-                } );
     }
 }

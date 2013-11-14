@@ -6,6 +6,7 @@ public class GameLauncher extends JFrame{
     public GameLauncher(){}
     
     public static void main(String[] args){
+    	JPanel test = JPanel();
         JFrame frame = new JFrame();
         frame.setSize(new Dimension(500, 500));
         frame.setTitle("Game Launcher");

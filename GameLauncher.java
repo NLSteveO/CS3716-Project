@@ -11,6 +11,10 @@ public class GameLauncher extends JFrame{
 	private static JMenuBar menu;
 	
     public GameLauncher(){
+    	JPanel main = new JPanel();
+    	main.setSize(new Dimension(499,499));
+    	add(main);
+    	
     	menu = new JMenuBar();
     	menu.add(createFileMenu());
     	menu.add(createEditMenu());

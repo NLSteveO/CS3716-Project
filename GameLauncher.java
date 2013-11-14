@@ -50,7 +50,7 @@ public class GameLauncher extends JFrame{
     }
     
     public JMenu createCharMenu(){
-    	JMenu caracter = new JMenu("Character");
+    	JMenu character = new JMenu("Character");
     	character.add(createNewChar());
     	character.add(createEditChar());
     	return character;
@@ -84,7 +84,7 @@ public class GameLauncher extends JFrame{
     }
     
     public JMenuBar menuBar(){
-    	JMenuBar bar = JMenuBar();
+    	JMenuBar bar = new JMenuBar();
     	bar.add(createFileMenu);
     	bar.add(createEditMenu);
     	bar.add(createCharMenu);

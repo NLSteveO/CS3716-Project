@@ -4,6 +4,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import java.awt.Dimension;
+import java.awt.EventQueue;
 
 public class GameLauncher extends JFrame{
 
@@ -92,11 +93,16 @@ public class GameLauncher extends JFrame{
     }
         
     public static void main(String[] args){
+    	EventQueue.invokeLater(
+                new Runnable() {
+                   public void run() {
     	JFrame frame = new JFrame();
     	frame.setJMenuBar(menu);
         frame.setSize(new Dimension(500, 500));
         frame.setTitle("Game Launcher");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+                   }
+                } );
     }
 }

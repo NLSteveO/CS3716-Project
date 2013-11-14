@@ -11,7 +11,10 @@ public class GameLauncher extends JFrame{
 	
     public GameLauncher(){
     	menu = new JMenuBar();
-    	menu = menuBar();
+    	menu.add(createFileMenu());
+    	menu.add(createEditMenu());
+    	menu.add(createCharMenu());
+    	menu.add(createHelpMenu());
     }
     
     public JMenu createFileMenu(){
@@ -87,16 +90,7 @@ public class GameLauncher extends JFrame{
     	JMenuItem about = new JMenuItem("About");
     	return about;
     }
-    
-    public JMenuBar menuBar(){
-    	JMenuBar bar = new JMenuBar();
-    	bar.add(createFileMenu());
-    	bar.add(createEditMenu());
-    	bar.add(createCharMenu());
-    	bar.add(createHelpMenu());
-    	return bar;
-    }
-    
+        
     public static void main(String[] args){
     	JFrame frame = new JFrame();
     	frame.setJMenuBar(menu);

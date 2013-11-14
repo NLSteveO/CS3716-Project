@@ -20,5 +20,17 @@ public class Happiness{
     public void updateTotal(int pwr, int wel, int sol){
         total += pwr*(power/100) + wel*(wealth/100) + sol*(solitude/100);
     }
+    
+    public int getPow(){
+        return (power/total)* 100;
+    }
+    
+    public int getWel(){
+        return (wealth/total)*100;
+    }
+    
+    public int getSol(){
+        return (solitude/total)*100;
+    }
 
 }

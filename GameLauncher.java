@@ -10,7 +10,7 @@ import java.awt.EventQueue;
 public class GameLauncher extends JFrame{
 
 	private static JMenuBar menu;
-	private JMenu file, edit, character, help;
+	private JMenu file, editMenu, character, help;
 	private JMenuItem nGame, save, load, exit, edit, nChar, eChar, rules, about;
 	
     public GameLauncher(){
@@ -25,10 +25,10 @@ public class GameLauncher extends JFrame{
     public JMenu createFileMenu(){
     	file = new JMenu("File");
         file.add(createNewGame());
-        file.addSeperator();
+        file.addSeparator();
         file.add(createSaveItem());
         file.add(createLoadItem());
-        file.addSeperator();
+        file.addSeparator();
         file.add(createExitItem());
         return file;
     }
@@ -54,9 +54,9 @@ public class GameLauncher extends JFrame{
     }
     
     public JMenu createEditMenu(){
-    	edit = new JMenu("Edit");
-    	edit.add(createEditItem());
-    	return edit;
+    	editMenu = new JMenu("Edit");
+    	editMenu.add(createEditItem());
+    	return editMenu;
     }
     
     public JMenuItem createEditItem(){

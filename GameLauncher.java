@@ -99,9 +99,7 @@ public class GameLauncher extends JFrame{
     }
         
     public static void main(String[] args){
-    	GameLauncher game = new GameLauncher();
     	JFrame frame = new JFrame();
-    	frame.add(game);
     	frame.setJMenuBar(menu);
         frame.setSize(new Dimension(500, 500));
         frame.setTitle("Game Launcher");

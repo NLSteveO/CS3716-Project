@@ -22,15 +22,15 @@ public class Happiness{
     }
     
     public int getPow(){
-        return (power/total)* 100;
+        return ((power/total)* 100);
     }
     
     public int getWel(){
-        return (wealth/total)*100;
+        return ((wealth/total)*100);
     }
     
     public int getSol(){
-        return (solitude/total)*100;
+        return ((solitude/total)*100);
     }
 
 }

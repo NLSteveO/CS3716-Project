@@ -7,7 +7,12 @@ import java.awt.Dimension;
 
 public class GameLauncher extends JFrame{
 
-    public GameLauncher(){}
+	private static JMenuBar menu;
+	
+    public GameLauncher(){
+    	menu = new JMenuBar();
+    	menu = menuBar();
+    }
     
     public JMenu createFileMenu(){
     	JMenu file = new JMenu("File");
@@ -94,7 +99,7 @@ public class GameLauncher extends JFrame{
     
     public static void main(String[] args){
     	JFrame frame = new JFrame();
-    	frame.setJMenuBar(menuBar());
+    	frame.setJMenuBar(menu);
         frame.setSize(new Dimension(500, 500));
         frame.setTitle("Game Launcher");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

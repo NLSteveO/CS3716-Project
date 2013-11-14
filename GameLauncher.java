@@ -98,9 +98,9 @@ public class GameLauncher extends JFrame{
     }
         
     public static void main(String[] args){
-    	/**EventQueue.invokeLater(
+    	EventQueue.invokeLater(
                 new Runnable() {
-                   public void run() {*/
+                   public void run() {
     	GameLauncher game = new GameLauncher();
     	JFrame frame = new JFrame();
     	frame.add(game);
@@ -109,7 +109,7 @@ public class GameLauncher extends JFrame{
         frame.setTitle("Game Launcher");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-                   /**}
-                } );*/
+                   }
+                } );
     }
 }

@@ -5,21 +5,27 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import java.awt.Dimension;
-import java.awt.EventQueue;
+import javax.swing.SwingUtilities;
 
 public class GameLauncher extends JFrame{
 
-	private static JMenuBar menu;
+	static GameLauncher game;
+	private JMenuBar menu;
 	private JMenu file, editMenu, character, help;
 	private JMenuItem nGame, save, load, exit, edit, nChar, eChar, rules, about;
 	
     public GameLauncher(){
-    	
+    	super("Game Launcher");
+        setSize(new Dimension(500, 500));
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
     	menu = new JMenuBar();
     	menu.add(createFileMenu());
     	menu.add(createEditMenu());
     	menu.add(createCharMenu());
     	menu.add(createHelpMenu());
+    	setJMenuBar(menu);
     }
     
     public JMenu createFileMenu(){
@@ -99,11 +105,8 @@ public class GameLauncher extends JFrame{
     }
         
     public static void main(String[] args){
-    	JFrame frame = new JFrame();
-    	frame.setJMenuBar(menu);
-        frame.setSize(new Dimension(500, 500));
-        frame.setTitle("Game Launcher");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+    	SwingUtilities.invokeLater(new Runnable(){
+    		public void run(){game = new GameLauncher();}
+    	});
     }
 }

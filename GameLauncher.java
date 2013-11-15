@@ -5,7 +5,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.SwingUtilities;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GameLauncher extends JFrame{
 
@@ -56,6 +62,13 @@ public class GameLauncher extends JFrame{
     
     public JMenuItem createExitItem(){
     	exit = new JMenuItem("Exit");
+    	class MenuItemListener implements ActionListener{
+            public void actionPerformed(ActionEvent event){
+               System.exit(0);
+            }
+         }
+         ActionListener listener = new MenuItemListener();
+         exit.addActionListener(listener);
     	return exit;
     }
     

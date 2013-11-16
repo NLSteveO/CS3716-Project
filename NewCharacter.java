@@ -2,6 +2,7 @@ package Character;
 
 // Imports
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -13,9 +14,7 @@ public class NewCharacter extends JFrame{
 	private JSlider pwrSlider;      // slider for power happiness
 	private JSlider welSlider;      // slider for wealth happiness
 	private JSlider solSlider;      // slider for solitude happiness
-	private int pwrPos = 0;
-	private int welPos = 0;
-	private int solPos = 0;
+	private JLabel points;
 	private JTextField name;        // enter the character name
 	private JTextField pwrField;    // text field for power happiness
 	private JTextField welField;    // text field for wealth happiness
@@ -34,23 +33,23 @@ public class NewCharacter extends JFrame{
      * Initializes Instance Variables
      */
     private void initiVariables(){
+    	points = new JLabel("Points: 100");
     	finish = new JButton("Finish");
     	close = new JButton("Close");
-    	pwrSlider = new JSlider();
-    	welSlider = new JSlider();
-    	solSlider = new JSlider();
+    	pwrSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 0);
+    	welSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 0);
+    	solSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 0);
     	solSlider.setMaximum(100);
     	solSlider.setMinimum(0);
-    	name = new JTextField();
-    	pwrField = new JTextField();
-    	welField = new JTextField();
-    	solField = new JTextField();
+    	name = new JTextField("Enter Name");
+    	pwrField = new JTextField("0", 3);
+    	welField = new JTextField("0", 3);
+    	solField = new JTextField("0", 3);
     	pwrField.setSize(1, 3);
     	
     	class FinishListener implements ActionListener{
     		public void actionPerformed(ActionEvent evt){
     			System.out.println("test");
-    			save();
     		}
     	}
     	
@@ -60,19 +59,30 @@ public class NewCharacter extends JFrame{
     		}
     	}
     	
-    	class SliderListener implements ActionListener{
-    		public void actionPerformed(ActionEvent evt){
-    			pwrPos = (int)pwrSlider.getValue();
-    			System.out.println(pwrPos);
+    	class SliderListener implements ChangeListener{
+    		public void stateChanged(ChangeEvent e){
+    			//System.out.println("slider");
+    			int pwrTemp = pwrSlider.getValue();
+    			int welTemp = welSlider.getValue();
+    			int solTemp = solSlider.getValue();
+    			pwrField.setText(Integer.toString(pwrTemp));
+    			welField.setText(Integer.toString(welTemp));
+    			solField.setText(Integer.toString(solTemp));
+    			points.setText("Points: " + Integer.toString(100 - (pwrTemp + welTemp + solTemp)));
     		}
     	}
+    	
+    	SliderListener e = new SliderListener();
+    	pwrSlider.addChangeListener(e);
+    	welSlider.addChangeListener(e);
+    	solSlider.addChangeListener(e);
     	
     	ActionListener fin = new FinishListener();
     	finish.addActionListener(fin);
     	
     	ActionListener clo = new CloseListener();
     	close.addActionListener(clo);
-
+        
     	
     }
     
@@ -84,11 +94,11 @@ public class NewCharacter extends JFrame{
     	north.add(new JLabel("Create New Character"));
     	
     	JPanel center = new JPanel();
-    	GridLayout centerLayout = new GridLayout(4, 4);
+    	GridLayout centerLayout = new GridLayout(4, 4, 10, 10);
     	center.setLayout(centerLayout);
     	center.add(new JLabel("Name"));
     	center.add(name);
-    	center.add(new JLabel("       "));
+    	center.add(points);
     	center.add(new JLabel("Power"));
     	center.add(pwrField);
     	center.add(pwrSlider);
@@ -106,12 +116,6 @@ public class NewCharacter extends JFrame{
     	add(north, BorderLayout.NORTH);
     	add(south, BorderLayout.SOUTH);
     	add(center, BorderLayout.CENTER);
-    }
-    
-    
-    
-    private void save(){
-    	System.out.println("save");
     }
     
     /**

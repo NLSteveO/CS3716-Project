@@ -31,7 +31,7 @@ public class NewCharacter extends JFrame{
 	 */
     public NewCharacter(){
     	initiVariables();
-    	panel();
+    	//add(panel());
     }
     
     /**
@@ -125,12 +125,15 @@ public class NewCharacter extends JFrame{
     /**
      * Creates and lays out panels
      */
-    public void panel(){
+    public JPanel panel(){
+    	JPanel main = new JPanel();
+    	main.setLayout(new BorderLayout());
+    	
     	JPanel north = new JPanel();
     	north.add(new JLabel("Create New Character"));
     	
     	JPanel center = new JPanel();
-    	GridLayout centerLayout = new GridLayout(4, 4, 20, 50);
+    	GridLayout centerLayout = new GridLayout(4, 3, 20, 50);
     	center.setLayout(centerLayout);
     	center.add(new JLabel("Name"));
     	center.add(name);
@@ -149,20 +152,21 @@ public class NewCharacter extends JFrame{
     	south.add(finish);
     	south.add(close);
     	
-    	add(north, BorderLayout.NORTH);
-    	add(south, BorderLayout.SOUTH);
-    	add(center, BorderLayout.CENTER);
+    	main.add(north, BorderLayout.NORTH);
+    	main.add(south, BorderLayout.SOUTH);
+    	main.add(center, BorderLayout.CENTER);
+    	return main;
     }
     
     /**
      * A Main method used for testing NewCharacter
      * @param args
-     */
+     *
     public static void main(String[] args){
         JFrame f = new NewCharacter();
         f.setSize(new Dimension(500, 500));
         f.setTitle("Create New Character");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
-    }
+    }*/
 }

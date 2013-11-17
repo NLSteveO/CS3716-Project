@@ -148,7 +148,7 @@ public class GameLauncher extends JFrame{
             public void actionPerformed(ActionEvent event){
             	NewCharacter newC = new NewCharacter();
             	createFrame("New Character", new Dimension(500, 500));
-            	frame.add(newC);
+            	frame.add(newC.panel());
             }
          }
          ActionListener listener = new MenuItemListener();

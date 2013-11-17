@@ -1,4 +1,6 @@
-package game.government
+package game.government;
+
+import game.character.Character;
 
 public interface Government{
 

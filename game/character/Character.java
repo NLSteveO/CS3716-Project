@@ -1,5 +1,6 @@
 package game.character;
 
+
 public class Character{
 
     private Happiness happy;

@@ -1,4 +1,4 @@
-package Character;
+package game.character;
 
 // Imports
 import javax.swing.*;

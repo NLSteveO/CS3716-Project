@@ -1,5 +1,8 @@
 package game.country;
 
+import game.government.Government;
+import game.map.Territory;
+
 public class Country{
     
     private Government gov;

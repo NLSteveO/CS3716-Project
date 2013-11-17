@@ -29,6 +29,7 @@ public class Character{
     	else if(stat.isDict()){
     		return "Dictator";
     	}
+    	else return "";
     }
     
     public Happiness getHappiness(){

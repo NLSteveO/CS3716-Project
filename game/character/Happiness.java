@@ -6,7 +6,7 @@ public class Happiness{
     private int wealth;
     private int solitude;
     private int total;
-
+    
     public Happiness(int pwr, int wel, int sol){
         power = pwr;
         wealth = wel;

@@ -1,11 +1,12 @@
 package game.character;
 
-public class Status(){
-	//this could possbily be an interface instead???
+public class Status{
+	//this could possibly be an interface instead???
 	private String status;
 	private boolean president;
 	private boolean dictator;
 	private boolean civilian;
+	
 	//could be more options added later
 	public Status(String stat){
 		status = stat.toLowerCase();
@@ -15,7 +16,7 @@ public class Status(){
 		else if(status == "dict"){
 			dictator = true;
 		}
-		else if(status = "civ"){
+		else if(status == "civ"){
 			civilian = true;
 		}
 	}
@@ -31,7 +32,7 @@ public class Status(){
 			president = false;
 			civilian = false;
 		}
-		else if(newStat = "civ"){
+		else if(newStat == "civ"){
 			civilian = true;
 			president = false;
 			dictator = false;

@@ -5,16 +5,19 @@ import game.map.Territory;
 
 public class Country{
     
-    private Government gov;
-    private Territory ter;
+    @SuppressWarnings("unused")
+	private Government gov;
+    @SuppressWarnings("unused")
+	private Territory ter;
     
-    private Country(Government g, Teritory t){
+    private Country(Government g, Territory t){
         gov = g;
         ter = t;
     }
 
-    public void createCountry(Government g, Teritory t){
-        Country c = new Country(g, t);
+    public void createCountry(Government g, Territory t){
+        @SuppressWarnings("unused")
+		Country c = new Country(g, t);
     }
 
     

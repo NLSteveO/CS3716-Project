@@ -5,7 +5,7 @@ public class Character{
     private Happiness happy;
     private Teritory location;
     
-    public Character{
+    public Character(){
         
     }
 
@@ -14,7 +14,7 @@ public class Character{
     }
 
     public Happiness getHappiness(){
-        
+
     }
 
     public void startCountry(){

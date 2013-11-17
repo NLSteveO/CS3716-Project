@@ -1,6 +1,5 @@
-
-
 import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -23,9 +22,11 @@ public class GameLauncher extends JFrame{
 
 	static GameLauncher game;
 	private Dimension size;
+	private JFrame frame;
 	private JMenuBar menu;
 	private JMenu file, editMenu, character, help;
-	private JMenuItem nGame, save, load, exit, edit, nChar, eChar, rules, about;
+	private JMenuItem nGame, save, load, exit, edit, nChar, sChar, eChar, rules, about;
+	private int selectedChar = 0;
 	
     public GameLauncher(){
     	super("Game Launcher");
@@ -37,6 +38,7 @@ public class GameLauncher extends JFrame{
     	
         BackgroundPanel bg = new BackgroundPanel("./Images/flag.jpg", size);
     	add(bg);
+    	add(new JPanel());
         
     	menu = new JMenuBar();
     	menu.add(createFileMenu());
@@ -59,6 +61,19 @@ public class GameLauncher extends JFrame{
     
     public JMenuItem createNewGame(){
     	nGame = new JMenuItem("New Game");
+    	class MenuItemListener implements ActionListener{
+            public void actionPerformed(ActionEvent event){
+            	if (selectedChar == 0){
+            	    createFrame("Error", new Dimension(300, 300));
+            		frame.add(new JLabel("You must first create or select a character before starting a new game."));
+            	}
+            	else {
+            		createFrame("New Game", new Dimension(300, 300));
+            	}
+            }
+        }
+        ActionListener listener = new MenuItemListener();
+        nGame.addActionListener(listener);
     	return nGame;
     }
     
@@ -120,6 +135,7 @@ public class GameLauncher extends JFrame{
     public JMenu createCharMenu(){
     	character = new JMenu("Character");
     	character.add(createNewChar());
+    	character.add(createSelectChar());
     	character.add(createEditChar());
     	return character;
     }
@@ -128,6 +144,9 @@ public class GameLauncher extends JFrame{
     	nChar = new JMenuItem("New Character");
         class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
+            	NewCharacter newC = new NewCharacter();
+            	createFrame("New Character", new Dimension(500, 500));
+            	frame.add(newC);
             }
          }
          ActionListener listener = new MenuItemListener();
@@ -135,15 +154,27 @@ public class GameLauncher extends JFrame{
     	return nChar;
     }
     
+    public JMenuItem createSelectChar(){
+    	sChar = new JMenuItem("Select Character");
+        class MenuItemListener implements ActionListener{
+            public void actionPerformed(ActionEvent event){
+					JFileChooser fc = new JFileChooser("./Characters/");
+					int returnVal = fc.showOpenDialog(GameLauncher.this);
+					if (returnVal == JFileChooser.APPROVE_OPTION){
+					    File file = fc.getSelectedFile();
+					}
+            }
+         }
+         ActionListener listener = new MenuItemListener();
+         sChar.addActionListener(listener);
+    	return sChar;
+    }
+    
     public JMenuItem createEditChar(){
     	eChar = new JMenuItem("Edit Character");
         class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-   					JFileChooser fc = new JFileChooser("./Characters/");
-   					int returnVal = fc.showOpenDialog(GameLauncher.this);
-   					if (returnVal == JFileChooser.APPROVE_OPTION){
-   					    File file = fc.getSelectedFile();
-   					}
+            	
             }
          }
          ActionListener listener = new MenuItemListener();
@@ -162,19 +193,14 @@ public class GameLauncher extends JFrame{
     	rules = new JMenuItem("Rules");
         class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-               JFrame rulesFrame = new JFrame("Rules");
                JPanel rulesPanel = new JPanel();
                rulesPanel.add(new JLabel("The"));
                rulesPanel.add(new JLabel("Rules"));
                rulesPanel.add(new JLabel("Will"));
                rulesPanel.add(new JLabel("Go"));
                rulesPanel.add(new JLabel("Here!"));
-               rulesFrame.add(rulesPanel);
-               rulesFrame.setSize(250, 150);
-               rulesFrame.setLocationRelativeTo(null);
-               rulesFrame.setResizable(false);
-               rulesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-               rulesFrame.setVisible(true);
+               createFrame("Rules", new Dimension(250, 150));
+               frame.add(rulesPanel);
             }
          }
          ActionListener listener = new MenuItemListener();
@@ -186,7 +212,6 @@ public class GameLauncher extends JFrame{
     	about = new JMenuItem("About");
         class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-               JFrame aboutFrame = new JFrame();
                JPanel main = new JPanel();
                main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
                main.add(new JLabel("About:"));
@@ -194,17 +219,22 @@ public class GameLauncher extends JFrame{
                main.add(new JLabel("Student Number: 200644979, 201121159, 201129574, and 201004603"));
                main.add(new JLabel("Created for Computer Science 3716"));
                main.add(new JLabel("Instructor: Dr. Fiech"));
-               aboutFrame.add(main);
-               aboutFrame.setSize(550, 150);
-               aboutFrame.setLocationRelativeTo(null);
-               aboutFrame.setTitle("About");
-               aboutFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-               aboutFrame.setVisible(true);
+               createFrame("About", new Dimension(550, 150));
+               frame.add(main);
             }
          }
          ActionListener listener = new MenuItemListener();
          about.addActionListener(listener);
     	return about;
+    }
+    
+    public void createFrame(String title, Dimension size){
+    	frame = new JFrame(title);
+    	frame.setSize(size);
+    	frame.setLocationRelativeTo(null);
+    	frame.setResizable(false);
+    	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    	frame.setVisible(true);
     }
         
     public static void main(String[] args){

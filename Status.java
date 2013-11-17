@@ -1,7 +1,7 @@
 package game.character;
 
 public class Status(){
-	//this could possbily be an interface instead??
+	//this could possbily be an interface instead???
 	private String status;
 	private boolean president;
 	private boolean dictator;

@@ -17,6 +17,7 @@ public class Character{
       
     //}
 
+    //returns a string that says the status of the character
     public String getStatus(){ //More status' can be added, i.e vice pres., etc
     	if(stat.isPres()){
     		return "President";

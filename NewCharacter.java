@@ -3,9 +3,13 @@ package Character;
 // Imports
 import javax.swing.*;
 import javax.swing.event.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * A class to construct the GUI for creating a new character
+ */
 public class NewCharacter extends JFrame{
     
 	//Instance Variables
@@ -33,6 +37,7 @@ public class NewCharacter extends JFrame{
      * Initializes Instance Variables
      */
     private void initiVariables(){
+    	// Construct nescessary variables
     	points = new JLabel("Points: 100");
     	finish = new JButton("Finish");
     	close = new JButton("Close");
@@ -47,6 +52,7 @@ public class NewCharacter extends JFrame{
     	solField = new JTextField("0", 3);
     	pwrField.setSize(1, 3);
     	
+    	// A action listener for the finish button
     	class FinishListener implements ActionListener{
     		public void actionPerformed(ActionEvent evt){
     			System.out.println("test");
@@ -55,12 +61,14 @@ public class NewCharacter extends JFrame{
     		}
     	}
     	
+    	// A action listener for the close button
     	class CloseListener implements ActionListener{
     		public void actionPerformed(ActionEvent evt){
     			System.out.println("test");
     		}
     	}
     	
+    	// a change listener for the sliders
     	class SliderListener implements ChangeListener{
     		public void stateChanged(ChangeEvent e){
     			//System.out.println("slider");
@@ -74,6 +82,26 @@ public class NewCharacter extends JFrame{
     		}
     	}
     	
+    	//a key listener for the textfields
+    	class EnterListener implements KeyListener{
+    		
+			public void keyPressed(KeyEvent e) {}
+
+			public void keyReleased(KeyEvent e) {
+				try{
+					pwrSlider.setValue(Integer.parseInt(pwrField.getText()));
+					welSlider.setValue(Integer.parseInt(welField.getText()));
+					solSlider.setValue(Integer.parseInt(solField.getText()));
+				}
+				
+				catch(NumberFormatException nfe){
+					System.out.println("Exception");
+				}
+			}
+			public void keyTyped(KeyEvent e) {}
+    		
+    	}
+    	
     	SliderListener e = new SliderListener();
     	pwrSlider.addChangeListener(e);
     	welSlider.addChangeListener(e);
@@ -84,7 +112,11 @@ public class NewCharacter extends JFrame{
     	
     	ActionListener clo = new CloseListener();
     	close.addActionListener(clo);
-        
+    	
+    	EnterListener ent = new EnterListener();
+    	pwrField.addKeyListener(ent);
+    	welField.addKeyListener(ent);
+    	solField.addKeyListener(ent);
     	
     }
     
@@ -96,7 +128,7 @@ public class NewCharacter extends JFrame{
     	north.add(new JLabel("Create New Character"));
     	
     	JPanel center = new JPanel();
-    	GridLayout centerLayout = new GridLayout(4, 4, 10, 10);
+    	GridLayout centerLayout = new GridLayout(4, 4, 20, 50);
     	center.setLayout(centerLayout);
     	center.add(new JLabel("Name"));
     	center.add(name);

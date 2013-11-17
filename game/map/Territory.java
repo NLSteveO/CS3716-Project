@@ -38,17 +38,6 @@ public class Territory {
 
     public int getID(){
     	return ID;
-
-
-
-    public boolean addNeighbour(Territory t){
-    	for(int i=0; i<neighbours.size();i++){
-    		if(neighbours.get(i)==null)
-    			neighbours.set(i, t);
-    			return true;
-    	}
-    	 return false;
-
     }
     
     public boolean equals(Territory t){

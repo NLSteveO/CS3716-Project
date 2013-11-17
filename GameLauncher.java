@@ -1,8 +1,8 @@
+import game.character.NewCharacter;
+
 import javax.swing.BoxLayout;
-import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -13,11 +13,11 @@ import java.awt.Dimension;
 
 import javax.swing.SwingUtilities;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+@SuppressWarnings("serial")
 public class GameLauncher extends JFrame{
 
 	static GameLauncher game;
@@ -84,7 +84,8 @@ public class GameLauncher extends JFrame{
    				    JFileChooser fc = new JFileChooser("./Saves/");
                 int returnVal = fc.showSaveDialog(GameLauncher.this);
                     if (returnVal == JFileChooser.APPROVE_OPTION) {
-   						      File file = fc.getSelectedFile();
+   						      @SuppressWarnings("unused")
+							File file = fc.getSelectedFile();
                     }
             }
          }
@@ -100,7 +101,8 @@ public class GameLauncher extends JFrame{
                 JFileChooser fc = new JFileChooser("./Saves/");
    					 int returnVal = fc.showOpenDialog(GameLauncher.this);
    					     if (returnVal == JFileChooser.APPROVE_OPTION){
-   						      File file = fc.getSelectedFile();
+   						      @SuppressWarnings("unused")
+							File file = fc.getSelectedFile();
    						  }
             }
          }
@@ -161,7 +163,8 @@ public class GameLauncher extends JFrame{
 					JFileChooser fc = new JFileChooser("./Characters/");
 					int returnVal = fc.showOpenDialog(GameLauncher.this);
 					if (returnVal == JFileChooser.APPROVE_OPTION){
-					    File file = fc.getSelectedFile();
+					    @SuppressWarnings("unused")
+						File file = fc.getSelectedFile();
 					}
             }
          }

@@ -10,7 +10,7 @@ public interface Government{
 
     public String type();
 
-    public double currency(); //was type Currency but it doesn't exist yet so changed to avoid unnecessary error.
+    public Currency currency();
 
     public Character leader();
 

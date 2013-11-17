@@ -2,52 +2,52 @@ package game.character;
 
 public class Status(){
 	
-private String status;
-private boolean president;
-private boolean dictator;
-private boolean civilian;
-//could be more options added later
-public Status(String stat){
-	status = stat
-	if(status == "pres"){
-		president = true;
+	private String status;
+	private boolean president;
+	private boolean dictator;
+	private boolean civilian;
+	//could be more options added later
+	public Status(String stat){
+		status = stat
+		if(status == "pres"){
+			president = true;
+		}
+		else if(status == "dict"){
+			dictator = true;
+		}
+		else if(status = "civ"){
+			civilian = true;
+		}
 	}
-	else if(status == "dict"){
-		dictator = true;
-	}
-	else if(status = "civ"){
-		civilian = true;
-	}
-}
 
-public void updateStatus(String newStat){
-	if(newStat == "pres"){
-		president = true;
-		civilian = false;
-		dictator = false;
+	public void updateStatus(String newStat){
+		if(newStat == "pres"){
+			president = true;
+			civilian = false;
+			dictator = false;
+		}
+		else if(newStat == "dict"){
+			dictator = true;
+			president = false;
+			civilian = false;
+		}
+		else if(newStat = "civ"){
+			civilian = true;
+			president = false;
+			dictator = false;
+		}
 	}
-	else if(newStat == "dict"){
-		dictator = true;
-		president = false;
-		civilian = false;
+
+	public boolean isPres(){
+		return president;
 	}
-	else if(newStat = "civ"){
-		civilian = true;
-		president = false;
-		dictator = false;
+
+	public boolean isCiv(){
+		return civilian;
 	}
-}
 
-public boolean isPres(){
-	return president;
-}
+	public boolean isDict(){
+		return dictator;
+	}
 
-public boolean isCiv(){
-	return civilian;
-}
-
-public boolean isDict(){
-	return dictator;
-}
-
-} 
+}	 

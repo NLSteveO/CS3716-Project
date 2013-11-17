@@ -1,6 +1,9 @@
+
+
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -19,15 +22,21 @@ import java.io.File;
 public class GameLauncher extends JFrame{
 
 	static GameLauncher game;
+	private Dimension size;
 	private JMenuBar menu;
 	private JMenu file, editMenu, character, help;
 	private JMenuItem nGame, save, load, exit, edit, nChar, eChar, rules, about;
 	
     public GameLauncher(){
     	super("Game Launcher");
-        setSize(new Dimension(500, 500));
+    	size = new Dimension(720, 560);
+        setSize(size);
+        setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	
+        BackgroundPanel bg = new BackgroundPanel("./Images/flag.jpg", size);
+    	add(bg);
         
     	menu = new JMenuBar();
     	menu.add(createFileMenu());
@@ -153,7 +162,7 @@ public class GameLauncher extends JFrame{
     	rules = new JMenuItem("Rules");
         class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-               JFrame rulesFrame = new JFrame();
+               JFrame rulesFrame = new JFrame("Rules");
                JPanel rulesPanel = new JPanel();
                rulesPanel.add(new JLabel("The"));
                rulesPanel.add(new JLabel("Rules"));
@@ -162,7 +171,8 @@ public class GameLauncher extends JFrame{
                rulesPanel.add(new JLabel("Here!"));
                rulesFrame.add(rulesPanel);
                rulesFrame.setSize(250, 150);
-               rulesFrame.setTitle("Rules");
+               rulesFrame.setLocationRelativeTo(null);
+               rulesFrame.setResizable(false);
                rulesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                rulesFrame.setVisible(true);
             }
@@ -186,6 +196,7 @@ public class GameLauncher extends JFrame{
                main.add(new JLabel("Instructor: Dr. Fiech"));
                aboutFrame.add(main);
                aboutFrame.setSize(550, 150);
+               aboutFrame.setLocationRelativeTo(null);
                aboutFrame.setTitle("About");
                aboutFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                aboutFrame.setVisible(true);

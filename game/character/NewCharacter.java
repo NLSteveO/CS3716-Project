@@ -10,10 +10,7 @@ import java.awt.event.*;
 /**
  * A class to construct the GUI for creating a new character
  */
-<<<<<<< HEAD:game/character/NewCharacter.java
 @SuppressWarnings("serial")
-=======
->>>>>>> 773c6045ca5ac8dd60a122492b6633e15963724a:game/character/NewCharacter.java
 public class NewCharacter extends JFrame{
     
 	//Instance Variables
@@ -41,7 +38,7 @@ public class NewCharacter extends JFrame{
      * Initializes Instance Variables
      */
     private void initiVariables(){
-    	// Construct nescessary variables
+    	// Construct necessary variables
     	points = new JLabel("Points: 100");
     	finish = new JButton("Finish");
     	close = new JButton("Close");
@@ -61,12 +58,8 @@ public class NewCharacter extends JFrame{
     		public void actionPerformed(ActionEvent evt){
     			System.out.println("test");
     			Happiness hap = new Happiness(pwrSlider.getValue(), welSlider.getValue(), solSlider.getValue());
-<<<<<<< HEAD:game/character/NewCharacter.java
     			@SuppressWarnings("unused")
 				Character c = new Character(name.getText(), hap);
-=======
-    			Character c = new Character(name.getText(), hap);
->>>>>>> 773c6045ca5ac8dd60a122492b6633e15963724a:game/character/NewCharacter.java
     		}
     	}
     	

@@ -3,10 +3,7 @@ import java.util.ArrayList;
 
 public class Territory {
 	
-<<<<<<< HEAD
 	@SuppressWarnings("unused")
-=======
->>>>>>> 773c6045ca5ac8dd60a122492b6633e15963724a
 	private int ID;
     private ArrayList<Territory> neighbours;
     private IdGen generator = IdGen.getIdGen(); 
@@ -38,14 +35,10 @@ public class Territory {
         return false;
     }
     
-<<<<<<< HEAD
+
     @SuppressWarnings("unused")
-	public boolean addNeighbour(Territory t){
-    	for(int i=0; i<neighbours.size(); i++){
-=======
     public boolean addNeighbour(Territory t){
     	for(int i=0; i<neighbours.size();i++){
->>>>>>> 773c6045ca5ac8dd60a122492b6633e15963724a
     		if(neighbours.get(i)==null)
     			neighbours.set(i, t);
     			return true;

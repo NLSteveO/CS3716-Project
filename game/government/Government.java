@@ -10,8 +10,8 @@ public interface Government{
 
     public String type();
 
-    public Currency currency();
-
+    public double currency();//Was type Currency but it doesn't exist yet so temporarily changed
+ 
     public Character leader();
 
     public Character[] council(); 

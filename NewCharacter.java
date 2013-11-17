@@ -14,7 +14,7 @@ public class NewCharacter extends JFrame{
 	private JSlider pwrSlider;      // slider for power happiness
 	private JSlider welSlider;      // slider for wealth happiness
 	private JSlider solSlider;      // slider for solitude happiness
-	private JLabel points;
+	private JLabel points;          // Label for total points
 	private JTextField name;        // enter the character name
 	private JTextField pwrField;    // text field for power happiness
 	private JTextField welField;    // text field for wealth happiness
@@ -50,6 +50,8 @@ public class NewCharacter extends JFrame{
     	class FinishListener implements ActionListener{
     		public void actionPerformed(ActionEvent evt){
     			System.out.println("test");
+    			Happiness hap = new Happiness(pwrSlider.getValue(), welSlider.getValue(), solSlider.getValue());
+    			Character c = new Character(name.getText(), hap);
     		}
     	}
     	

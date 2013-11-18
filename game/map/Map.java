@@ -10,9 +10,10 @@ public class Map{
     //For now, generate one of several preset maps, in future iterations random
     //map generation may be implemented.
     public Map(int numTer, int size){
+    	coord = new Coord[size][size];
     	for(int i=0;i<size;i++){
     		for(int j=0;j<size;j++){
-    			coord[i][j]= new Coord(i,j);
+    			coord[i][j] = new Coord(i, j);
     		}
     	} 
     	createMap(numTer);

@@ -107,7 +107,7 @@ public class GameLauncher extends JFrame{
 		class OkButtonListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
             	createMap(Integer.parseInt(terrField.getText()), Integer.parseInt(sizeField.getText()));
-                frame.dispose();
+                //frame.dispose();
             }
          }
          ActionListener okListener = new OkButtonListener();
@@ -124,11 +124,12 @@ public class GameLauncher extends JFrame{
     
     public void createMap(int t, int s){
     	map = new MapPanel(new Dimension(500, 500), t, s);
-    	JPanel m = new JPanel();
-    	m.add(map);
-    	super.remove(bg);
-    	super.add(m);
-    	repaint();
+    	createFrame("f", new Dimension(500, 500));
+    	frame.add(map);
+    	
+    	//super.remove(bg);
+    	//super.add(map);
+    	//repaint();
     }
     
     public JMenuItem createSaveItem(){

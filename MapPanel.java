@@ -2,11 +2,10 @@ import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-
-
 
 import game.map.*;
 
@@ -25,10 +24,7 @@ public class MapPanel extends JPanel {
 		setMinimumSize(size);
 		setMaximumSize(size);
 		setSize(size);
-		setLayout(null);
-		
-		
-		
+		setLayout(new FlowLayout());
 	}
 	
 	
@@ -47,15 +43,20 @@ public class MapPanel extends JPanel {
 	}
 	
 	public void paintComponent(Graphics g){
+        super.paintComponent( g );
+        //g.setColor(Color.blue);
+        //g.drawRect(50, 50, 50, 50);
+        
 		Rectangle[][] rect = drawMap(dimense, numTer);
 		for(int i=0;i<rect.length;i++){
 			for(int j=0;j<rect.length;j++){
-				if((gameMap.getCoordinates())[i][j].hasTerritory())
-					g.setColor(Color.green);
+				if((gameMap.getCoordinates())[i][j].hasTerritory()){
+					System.out.println("Oh hey a territory.");
+					g.setColor(Color.green);}
 				else
 					g.setColor(Color.blue);
 				
-				g.drawRect((int)rect[i][j].getX(), (int)rect[i][j].getY(), rect[i][j].width, rect[i][j].width);
+				g.fillRect((int)rect[i][j].getX(), (int)rect[i][j].getY(), (int)rect[i][j].getWidth(), (int)rect[i][j].getHeight());
 			}
 		}
 		

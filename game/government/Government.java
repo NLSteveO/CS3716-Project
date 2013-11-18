@@ -4,7 +4,7 @@ import game.character.Character;
 
 public interface Government{
 
-    public boolean elections();
+    public void startElection();
 
     public int taxRate();
 

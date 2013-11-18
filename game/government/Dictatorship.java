@@ -5,9 +5,8 @@ import game.character.Character;
 public class Dictatorship implements Government{
 
 	@Override
-	public boolean elections() {
+	public void startElection() {//probs dont need this here HEIL DICTATOR
 		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

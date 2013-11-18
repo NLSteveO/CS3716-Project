@@ -104,5 +104,7 @@ public class Democracy implements Government, Election{//may not even need elect
 		}
 		return containsMem;
 	}
+	
+	//MORE TO COME HERE!
     
 }

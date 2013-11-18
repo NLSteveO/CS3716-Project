@@ -15,12 +15,6 @@ public class Dictatorship implements Government{
 	}
 
 	@Override
-	public String type() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public double currency() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -33,9 +27,10 @@ public class Dictatorship implements Government{
 	}
 
 	@Override
-	public Character[] council() {
+	public void addCouncilMem(Character chara) {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
+
 
 }

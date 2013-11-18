@@ -10,6 +10,8 @@ public class Democracy implements Government, Election{//may not even need elect
 	private String[] candits;
 	private int[] votesForCan;
 	private int i,highest,indexOfHigh,taxRatePer;
+	private Character[] council;
+	private boolean containsMem;
 	
 	public void startElection() { //starts an election
 		votes = new String[100];
@@ -67,12 +69,6 @@ public class Democracy implements Government, Election{//may not even need elect
 	}
 
 	@Override
-	public String type() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public double currency() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -85,10 +81,28 @@ public class Democracy implements Government, Election{//may not even need elect
 	}
 
 	
-	//What to do here? MAke leader choose council, and have character accept or decline invite
-	public Character[] council() {
-		// TODO Auto-generated method stub
-		return null;
+	//What to do here? Make leader choose council, and have character accept or decline invite
+	public void addCouncilMem(Character chara) {
+		i=0;
+		while(i<council.length){
+			if(council[i] == null){
+				council[i] = chara;
+				i=council.length;
+			}
+			i = i+1;
+		}
+	}
+	
+	public boolean isCouncilMem(Character cc){
+		for(int i=0;i<council.length;i++){
+			if(council[i].equals(cc)){
+				containsMem = true;
+			}
+			else{
+				containsMem = false;
+			}
+		}
+		return containsMem;
 	}
     
 }

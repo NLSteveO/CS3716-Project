@@ -8,12 +8,10 @@ public interface Government{
 
     public void setTaxRate(int taxPercent);
 
-    public String type();
-
     public double currency();//Was type Currency but it doesn't exist yet so temporarily changed
  
     public Character leader();
 
-    public Character[] council(); 
+    public void addCouncilMem(Character chara); 
 
 }

@@ -6,7 +6,7 @@ public interface Government{
 
     public void startElection();
 
-    public int taxRate();
+    public void setTaxRate(int taxPercent);
 
     public String type();
 

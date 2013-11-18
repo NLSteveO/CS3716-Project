@@ -9,10 +9,9 @@ public class Dictatorship implements Government{
 		// TODO Auto-generated method stub
 	}
 
-	@Override
-	public int taxRate() {
+	//also need get tax rate method!
+	public void setTaxRate(int taxPercent) {
 		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override

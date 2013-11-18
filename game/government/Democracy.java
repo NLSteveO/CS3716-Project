@@ -9,7 +9,7 @@ public class Democracy implements Government, Election{//may not even need elect
 	private String[] votes;
 	private String[] candits;
 	private int[] votesForCan;
-	private int i,highest,indexOfHigh;
+	private int i,highest,indexOfHigh,taxRatePer;
 	
 	public void startElection() { //starts an election
 		votes = new String[100];
@@ -57,13 +57,13 @@ public class Democracy implements Government, Election{//may not even need elect
 		return candits[indexOfHigh];
 	}
 
+	//set and get tax rates
+	public void setTaxRate(int taxPercent) {
+		taxRatePer = taxPercent;
+	}
 	
-	
-	
-	@Override
-	public int taxRate() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getTaxRate(){
+		return taxRatePer;
 	}
 
 	@Override
@@ -84,7 +84,8 @@ public class Democracy implements Government, Election{//may not even need elect
 		return null;
 	}
 
-	@Override
+	
+	//What to do here? MAke leader choose council, and have character accept or decline invite
 	public Character[] council() {
 		// TODO Auto-generated method stub
 		return null;

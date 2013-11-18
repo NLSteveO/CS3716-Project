@@ -124,7 +124,7 @@ public class GameLauncher extends JFrame{
     
     public void createMap(int t, int s){
     	map = new MapPanel(new Dimension(500, 500), t, s);
-    	createFrame("f", new Dimension(500, 500));
+    	createFrame("f", new Dimension(s*50, s*50));
     	frame.add(map);
     	
     	//super.remove(bg);

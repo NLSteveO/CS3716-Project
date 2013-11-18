@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Map{
 	
 	private Coord[][] coord;
-    private ArrayList<Character> characters;
+    //private ArrayList<Character> characters;
     
     //For now, generate one of several preset maps, in future iterations random
     //map generation may be implemented.
@@ -34,6 +34,10 @@ public class Map{
     		for(int i=0; i<numTer;i++){
     			x=r.nextInt(coord.length);
     			y=r.nextInt(coord.length);
+    			if (x == 0) x++;	//Need to find
+    			if (y == 0) y++;	//A better fix
+    			if (x == 20) x--;
+    			if (y == 20) y--;
     			System.out.print("("+x+","+y+"): ");
     			coord[x][y].setTerritory(new Territory());
     			System.out.println("Territory:"+coord[x][y].getTerritory().getID());

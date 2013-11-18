@@ -5,7 +5,7 @@ public class Territory {
 	
 
 	private int ID;
-    private ArrayList<Territory> neighbours;
+    private ArrayList<Territory> neighbours, T;
     private IdGen generator = IdGen.getIdGen(); 
     
     public Territory(){

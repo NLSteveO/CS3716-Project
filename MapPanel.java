@@ -35,7 +35,7 @@ public class MapPanel extends JPanel {
 		Rectangle[][] squareArray= new Rectangle[coord.length][coord.length];
 		for(int i=0; i<coord.length;i++){
 			for(int j=0; j<coord.length;j++){
-				squareArray[i][j]= new Rectangle(i*TerDem.width,j*TerDem.height,TerDem.width,TerDem.height);
+				squareArray[i][j]= new Rectangle(i*50,j*50,50,50);
 			}
 			
 		}
@@ -46,7 +46,8 @@ public class MapPanel extends JPanel {
         super.paintComponent( g );
         //g.setColor(Color.blue);
         //g.drawRect(50, 50, 50, 50);
-        
+
+		System.out.println("Oh hai");
 		Rectangle[][] rect = drawMap(dimense, numTer);
 		for(int i=0;i<rect.length;i++){
 			for(int j=0;j<rect.length;j++){
@@ -59,7 +60,6 @@ public class MapPanel extends JPanel {
 				g.fillRect((int)rect[i][j].getX(), (int)rect[i][j].getY(), (int)rect[i][j].getWidth(), (int)rect[i][j].getHeight());
 			}
 		}
-		
 	}
 	
 }

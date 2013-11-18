@@ -26,7 +26,7 @@ public class GameLauncher extends JFrame{
 	private JMenuBar menu;
 	private JMenu file, editMenu, character, help;
 	private JMenuItem nGame, save, load, exit, edit, nChar, sChar, eChar, rules, about;
-	private int selectedChar = 0;
+	private int selectedChar = 1;// DONT FORGET TO FIX
 	
     public GameLauncher(){
     	super("Game Launcher");
@@ -72,6 +72,7 @@ public class GameLauncher extends JFrame{
             	}
             }
         }
+            	
         ActionListener listener = new MenuItemListener();
         nGame.addActionListener(listener);
     	return nGame;

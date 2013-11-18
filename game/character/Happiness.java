@@ -11,6 +11,7 @@ public class Happiness{
         power = pwr;
         wealth = wel;
         solitude = sol;
+        total = pwr + wel + sol;
     }
 
     public int getTotal(){

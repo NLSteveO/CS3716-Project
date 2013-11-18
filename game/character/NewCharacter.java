@@ -71,7 +71,7 @@ public class NewCharacter extends JFrame{
     				c[2] = (welField.getText());
     				c[3] = (solField.getText());
     				save(c);
-    				System.exit(0);
+        			System.exit(0);
     			}
     			else{
     				
@@ -82,7 +82,7 @@ public class NewCharacter extends JFrame{
     	// A action listener for the close button
     	class CloseListener implements ActionListener{
     		public void actionPerformed(ActionEvent evt){
-                System.exit(0);
+    			System.exit(0);
     		}
     	}
     	
@@ -189,6 +189,7 @@ public class NewCharacter extends JFrame{
     	main.add(center, BorderLayout.CENTER);
     	return main;
     }
+    
     
     /**
      * A Main method used for testing NewCharacter

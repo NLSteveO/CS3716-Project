@@ -1,6 +1,7 @@
 import game.character.NewCharacter;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -8,8 +9,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import java.awt.Dimension;
+import java.awt.GridLayout;
 
 import javax.swing.SwingUtilities;
 
@@ -21,11 +24,13 @@ import java.io.File;
 public class GameLauncher extends JFrame{
 
 	static GameLauncher game;
+	private BackgroundPanel bg;
 	private Dimension size;
 	private JFrame frame;
 	private JMenuBar menu;
 	private JMenu file, editMenu, character, help;
 	private JMenuItem nGame, save, load, exit, edit, nChar, sChar, eChar, rules, about;
+	private MapPanel map;
 	private int selectedChar = 1;// DONT FORGET TO FIX
 	
     public GameLauncher(){
@@ -36,7 +41,7 @@ public class GameLauncher extends JFrame{
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	
-        BackgroundPanel bg = new BackgroundPanel("./Images/flag.jpg", size);
+        bg = new BackgroundPanel("./Images/flag.jpg", size);
     	add(bg);
     	add(new JPanel());
         
@@ -68,7 +73,7 @@ public class GameLauncher extends JFrame{
             		frame.add(new JLabel("You must first create or select a character before starting a new game."));
             	}
             	else {
-            		createFrame("New Game", new Dimension(300, 300));
+            		newGame();
             	}
             }
         }
@@ -76,6 +81,54 @@ public class GameLauncher extends JFrame{
         ActionListener listener = new MenuItemListener();
         nGame.addActionListener(listener);
     	return nGame;
+    }
+    
+    public void newGame(){
+    	createFrame("New Game", new Dimension(300, 300));
+		JPanel main = new JPanel();
+		main.setLayout(new GridLayout(3,2));
+		
+		JLabel size = new JLabel("Size of map.");
+		final JTextField sizeField = new JTextField();
+		main.add(size);
+		main.add(sizeField);
+		
+		JLabel terr = new JLabel("Number of territories.");
+		final JTextField terrField = new JTextField();
+		main.add(terr);
+		main.add(terrField);
+		
+		JButton ok = new JButton("OK");
+		JButton cancel = new JButton("Cancel");
+		main.add(ok);
+		main.add(cancel);
+		frame.add(main);
+		
+		class OkButtonListener implements ActionListener{
+            public void actionPerformed(ActionEvent event){
+            	createMap(Integer.parseInt(terrField.getText()), Integer.parseInt(sizeField.getText()));
+                frame.dispose();
+            }
+         }
+         ActionListener okListener = new OkButtonListener();
+         ok.addActionListener(okListener);
+		
+		class ButtonListener implements ActionListener{
+            public void actionPerformed(ActionEvent event){
+               frame.dispose();
+            }
+         }
+         ActionListener listener = new ButtonListener();
+         cancel.addActionListener(listener);
+    }
+    
+    public void createMap(int t, int s){
+    	map = new MapPanel(new Dimension(500, 500), t, s);
+    	JPanel m = new JPanel();
+    	m.add(map);
+    	super.remove(bg);
+    	super.add(m);
+    	repaint();
     }
     
     public JMenuItem createSaveItem(){

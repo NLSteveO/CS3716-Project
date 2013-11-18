@@ -1,4 +1,5 @@
-import game.character.NewCharacter;
+import game.character.*;
+import game.map.*;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -19,6 +20,8 @@ import javax.swing.SwingUtilities;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 @SuppressWarnings("serial")
 public class GameLauncher extends JFrame{
@@ -27,10 +30,11 @@ public class GameLauncher extends JFrame{
 	private BackgroundPanel bg;
 	private Dimension size;
 	private JFrame frame;
+	private JPanel main;
 	private JMenuBar menu;
 	private JMenu file, editMenu, character, help;
 	private JMenuItem nGame, save, load, exit, edit, nChar, sChar, eChar, rules, about;
-	private MapPanel map;
+	private Map map;
 	private int selectedChar = 1;// DONT FORGET TO FIX
 	
     public GameLauncher(){
@@ -85,7 +89,7 @@ public class GameLauncher extends JFrame{
     
     public void newGame(){
     	createFrame("New Game", new Dimension(300, 300));
-		JPanel main = new JPanel();
+		main = new JPanel();
 		main.setLayout(new GridLayout(3,2));
 		
 		JLabel size = new JLabel("Size of map.");
@@ -107,7 +111,6 @@ public class GameLauncher extends JFrame{
 		class OkButtonListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
             	createMap(Integer.parseInt(terrField.getText()), Integer.parseInt(sizeField.getText()));
-                //frame.dispose();
             }
          }
          ActionListener okListener = new OkButtonListener();
@@ -123,9 +126,13 @@ public class GameLauncher extends JFrame{
     }
     
     public void createMap(int t, int s){
-    	map = new MapPanel(new Dimension(500, 500), t, s);
-    	createFrame("Map", new Dimension((s*50)+6, (s*50)+28));
+    	MapPanel map = new MapPanel(new Dimension(500, 500), t, s);
+    	this.map = map.getMap();
+    	frame.setTitle("Map");
+    	frame.setSize(new Dimension((s*50)+6, (s*50)+28));
+    	frame.remove(main);
     	frame.add(map);
+    	frame.repaint();
     }
     
     public JMenuItem createSaveItem(){
@@ -135,8 +142,10 @@ public class GameLauncher extends JFrame{
    				    JFileChooser fc = new JFileChooser("./Saves/");
                 int returnVal = fc.showSaveDialog(GameLauncher.this);
                     if (returnVal == JFileChooser.APPROVE_OPTION) {
-   						      @SuppressWarnings("unused")
-							File file = fc.getSelectedFile();
+                    	File file = fc.getSelectedFile();
+						Coord[][] m = new Coord[map.getSize()][map.getSize()];
+						m = map.getCoordinates();
+                    	save(m, file);
                     }
             }
          }
@@ -145,6 +154,36 @@ public class GameLauncher extends JFrame{
     	return save;
     }
     
+    public void save(Coord[][] s, File f){
+		try {
+			File file;
+		      if (f.getName().contains(".txt")){
+				    file = new File(f.getName());
+				}
+			   else{
+				    file = new File(f + ".txt");
+			   }
+		    PrintWriter newChar = new PrintWriter(file);
+			for (int j = 0; j < map.getSize(); j++){
+				for (int i = 0; i < map.getSize(); i++){
+					if (s[i][j].hasTerritory()){
+						newChar.print("G");
+					}
+					else {
+						newChar.print("B");
+					}
+					if (i == map.getSize()-1)
+						newChar.println();
+				}
+		     }
+			  newChar.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	     
+	}
+    
     public JMenuItem createLoadItem(){
     	load = new JMenuItem("Load");
         class MenuItemListener implements ActionListener{
@@ -152,7 +191,6 @@ public class GameLauncher extends JFrame{
                 JFileChooser fc = new JFileChooser("./Saves/");
    					 int returnVal = fc.showOpenDialog(GameLauncher.this);
    					     if (returnVal == JFileChooser.APPROVE_OPTION){
-   						      @SuppressWarnings("unused")
 							File file = fc.getSelectedFile();
    						  }
             }

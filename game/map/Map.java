@@ -5,11 +5,13 @@ import java.util.ArrayList;
 public class Map{
 	
 	private Coord[][] coord;
+	private int size;
     //private ArrayList<Character> characters;
     
     //For now, generate one of several preset maps, in future iterations random
     //map generation may be implemented.
     public Map(int numTer, int size){
+    	this.size = size;
     	coord = new Coord[size][size];
     	for(int i=0;i<size;i++){
     		for(int j=0;j<size;j++){
@@ -93,6 +95,10 @@ public class Map{
     			return true;
     	}
     	return false;
+    }
+    
+    public int getSize(){
+    	return size;
     }
     
     public Coord[][] getCoordinates(){

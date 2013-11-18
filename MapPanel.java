@@ -3,59 +3,62 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics2D;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import game.map.*;
 
+@SuppressWarnings("serial")
 public class MapPanel extends JPanel {
 	Dimension WinDem;
 	Dimension TerDem;
 	Map gameMap;
 	int numTer;
 	int dimense;
+	Rectangle[][] squareArray;
 	
 	public MapPanel(Dimension size, int numTer, int dimense){
 		WinDem=size;
 		this.numTer=numTer;
 		this.dimense=dimense;
-		//setPreferredSize(size);
-		//setMinimumSize(size);
-		//setMaximumSize(size);
+		setPreferredSize(size);
+		setMinimumSize(size);
+		setMaximumSize(size);
 		setSize(size);
 		setLayout(new FlowLayout());
+		drawMap(dimense, numTer);
+	}
+	
+	public Map getMap(){
+		return gameMap;
 	}
 	
 	
-	public Rectangle[][] drawMap(int Dimense, int numTer){
+	public void drawMap(int Dimense, int numTer){
 		gameMap = new Map(numTer,Dimense);
 		TerDem = new Dimension ((int)WinDem.getHeight()/numTer, (int)WinDem.getWidth()/numTer);
 		Coord[][] coord = gameMap.getCoordinates();
-		Rectangle[][] squareArray= new Rectangle[coord.length][coord.length];
+		squareArray= new Rectangle[coord.length][coord.length];
 		for(int i=0; i<coord.length;i++){
 			for(int j=0; j<coord.length;j++){
 				squareArray[i][j]= new Rectangle(i*50,j*50,50,50);
 			}
 			
 		}
-		return squareArray;
 	}
 	
 	public void paintComponent(Graphics g){
         super.paintComponent( g );
-
-		Rectangle[][] rect = drawMap(dimense, numTer);
-		for(int i=0;i<rect.length;i++){
-			for(int j=0;j<rect.length;j++){
+		for(int i=0;i<squareArray.length;i++){
+			for(int j=0;j<squareArray.length;j++){
 				if((gameMap.getCoordinates())[i][j].hasTerritory()){
 					g.setColor(Color.green);}
 				else
 					g.setColor(Color.blue);
 				
-				g.fillRect((int)rect[i][j].getX(), (int)rect[i][j].getY(), (int)rect[i][j].getWidth(), (int)rect[i][j].getHeight());
+				g.fillRect((int)squareArray[i][j].getX(), (int)squareArray[i][j].getY(), (int)squareArray[i][j].getWidth(), (int)squareArray[i][j].getHeight());
 				g.setColor(Color.black);
-				g.drawRect((int)rect[i][j].getX(), (int)rect[i][j].getY(), (int)rect[i][j].getWidth(), (int)rect[i][j].getHeight());
+				g.drawRect((int)squareArray[i][j].getX(), (int)squareArray[i][j].getY(), (int)squareArray[i][j].getWidth(), (int)squareArray[i][j].getHeight());
 			}
 		}
 	}

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Map{
 	
 	private Coord[][] coord;
-    private ArrayList<Territory> territories;
     private ArrayList<Character> characters;
     
     //For now, generate one of several preset maps, in future iterations random
@@ -27,14 +26,14 @@ public class Map{
     
     
     public void  createMap(int numTer){
-    	if(numTer>coord.length)
+    	if(numTer>coord.length*coord.length)
     		return; // Error Check Better!!!
     	int x,y;
     	Random r= new Random();
     		for(int i=0; i<numTer;i++){
     			x=r.nextInt(coord.length);
     			y=r.nextInt(coord.length);
-    			System.out.println("("+x+","+y+")");
+    			System.out.print("("+x+","+y+"): ");
     			coord[x][y].setTerritory(new Territory());
     			System.out.println("Territory:"+coord[x][y].getTerritory().getID());
     		}
@@ -74,10 +73,6 @@ public class Map{
 	}
     
 
-    public void drawMap(){
-        
-    }
-
     public void updateMap(){
         
     }
@@ -94,5 +89,9 @@ public class Map{
     			return true;
     	}
     	return false;
+    }
+    
+    public Coord[][] getCoordinates(){
+    	return coord;
     }
 }

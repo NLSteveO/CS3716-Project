@@ -19,17 +19,8 @@ public class Character{
     //}
 
     //returns a string that says the status of the character
-    public String getStatus(){ //More status' can be added, i.e vice pres., etc
-    	if(stat.isPres()){
-    		return "President";
-    	}
-    	else if(stat.isCiv()){
-    		return "Civilian";
-    	}
-    	else if(stat.isDict()){
-    		return "Dictator";
-    	}
-    	else return "";
+    public String getStat(){ //More status' can be added, i.e vice pres., etc
+    	return stat.getStatus();
     }
     
     public Happiness getHappiness(){

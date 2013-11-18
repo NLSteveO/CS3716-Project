@@ -20,9 +20,9 @@ public class MapPanel extends JPanel {
 		WinDem=size;
 		this.numTer=numTer;
 		this.dimense=dimense;
-		setPreferredSize(size);
-		setMinimumSize(size);
-		setMaximumSize(size);
+		//setPreferredSize(size);
+		//setMinimumSize(size);
+		//setMaximumSize(size);
 		setSize(size);
 		setLayout(new FlowLayout());
 	}
@@ -44,20 +44,18 @@ public class MapPanel extends JPanel {
 	
 	public void paintComponent(Graphics g){
         super.paintComponent( g );
-        //g.setColor(Color.blue);
-        //g.drawRect(50, 50, 50, 50);
 
-		System.out.println("Oh hai");
 		Rectangle[][] rect = drawMap(dimense, numTer);
 		for(int i=0;i<rect.length;i++){
 			for(int j=0;j<rect.length;j++){
 				if((gameMap.getCoordinates())[i][j].hasTerritory()){
-					System.out.println("Oh hey a territory.");
 					g.setColor(Color.green);}
 				else
 					g.setColor(Color.blue);
 				
 				g.fillRect((int)rect[i][j].getX(), (int)rect[i][j].getY(), (int)rect[i][j].getWidth(), (int)rect[i][j].getHeight());
+				g.setColor(Color.black);
+				g.drawRect((int)rect[i][j].getX(), (int)rect[i][j].getY(), (int)rect[i][j].getWidth(), (int)rect[i][j].getHeight());
 			}
 		}
 	}

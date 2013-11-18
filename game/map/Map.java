@@ -34,13 +34,9 @@ public class Map{
     		for(int i=0; i<numTer;i++){
     			x=r.nextInt(coord.length);
     			y=r.nextInt(coord.length);
-    			if (x == 0) x++;	//Need to find
-    			if (y == 0) y++;	//A better fix
-    			if (x == 20) x--;
-    			if (y == 20) y--;
-    			System.out.print("("+x+","+y+"): ");
+    			//System.out.print("("+x+","+y+"): ");
     			coord[x][y].setTerritory(new Territory());
-    			System.out.println("Territory:"+coord[x][y].getTerritory().getID());
+    			//System.out.println("Territory:"+coord[x][y].getTerritory().getID());
     		}
     }
     
@@ -48,24 +44,27 @@ public class Map{
     	for(int i =0; i< coord.length;i++){
     		for(int j= 0; j< coord.length;j++){
     			if(coord[i][j].hasTerritory()){
-    				
-    				if(coord[i-1][j-1].hasTerritory())
-    					dualNeighbourship(i,j,i-1,j-1);
-    				if(coord[i][j-1].hasTerritory())
-    					dualNeighbourship(i,j,i,j-1);
-    				if(coord[i+1][j-1].hasTerritory())
-    					dualNeighbourship(i,j,i+1,j-1);
-    				if(coord[i-1][j].hasTerritory())
-    					dualNeighbourship(i,j,i-1,j);
-    				if(coord[i+1][j].hasTerritory())
-    					dualNeighbourship(i,j,i+1,j);
-    				if(coord[i-1][j+1].hasTerritory())
-    					dualNeighbourship(i,j,i-1,j+1);
-    				if(coord[i][j+1].hasTerritory())
-    					dualNeighbourship(i,j,i,j+1);
-    				if(coord[i+1][j+1].hasTerritory())
-    					dualNeighbourship(i,j,i+1,j+1);
-    				
+    				try{
+    					if(coord[i-1][j-1].hasTerritory())
+    						dualNeighbourship(i,j,i-1,j-1);
+    					if(coord[i][j-1].hasTerritory())
+    						dualNeighbourship(i,j,i,j-1);
+    					if(coord[i+1][j-1].hasTerritory())
+    						dualNeighbourship(i,j,i+1,j-1);
+    					if(coord[i-1][j].hasTerritory())
+    						dualNeighbourship(i,j,i-1,j);
+    					if(coord[i+1][j].hasTerritory())
+    						dualNeighbourship(i,j,i+1,j);
+    					if(coord[i-1][j+1].hasTerritory())
+    						dualNeighbourship(i,j,i-1,j+1);
+    					if(coord[i][j+1].hasTerritory())
+    						dualNeighbourship(i,j,i,j+1);
+    					if(coord[i+1][j+1].hasTerritory())
+    						dualNeighbourship(i,j,i+1,j+1);
+    				}
+    				catch(ArrayIndexOutOfBoundsException e){
+    					continue;
+    				}
     			}
     				
     		}

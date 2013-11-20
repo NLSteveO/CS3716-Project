@@ -6,7 +6,8 @@ public class Dictatorship implements Government{
 
 	private Character[] council;//NEED TO INITIALIZE THIS! LATER WHEN I DO MORE DICTAT STUFFF
 	private boolean containsMem;
-	private int i;
+	private int i,taxRatePer;
+	private String curName;
 	@Override
 	public void startElection() {//probs dont need this here HEIL DICTATOR
 		// TODO Auto-generated method stub
@@ -14,13 +15,16 @@ public class Dictatorship implements Government{
 
 	//also need get tax rate method!
 	public void setTaxRate(int taxPercent) {
-		// TODO Auto-generated method stub
+		taxRatePer = taxPercent;
+	}
+	
+	public int getTaxRate(){
+		return taxRatePer;
 	}
 
 	@Override
-	public double currency() {
-		// TODO Auto-generated method stub
-		return 0;
+	public void currency(String name) {
+		curName = name;
 	}
 
 	@Override

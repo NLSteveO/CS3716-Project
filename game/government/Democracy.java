@@ -4,7 +4,7 @@ import game.character.Character;
 /***NOTE: THE WINNER WILL NEED TO BE MADE president = true (status) IN CHARACTER CLASS
  ***This will probably be in main program? ex: check results of election, winner gets president = true
  */
-public class Democracy implements Government, Election{//may not even need election interface now
+public class Democracy implements Government{//may not even need election interface now
 	
 	private String[] votes;
 	private String[] candits;
@@ -12,6 +12,7 @@ public class Democracy implements Government, Election{//may not even need elect
 	private int i,highest,indexOfHigh,taxRatePer;
 	private Character[] council;
 	private boolean containsMem;
+	private String curName;
 	
 	public void startElection() { //starts an election
 		votes = new String[100];
@@ -69,9 +70,8 @@ public class Democracy implements Government, Election{//may not even need elect
 	}
 
 	@Override
-	public double currency() {
-		// TODO Auto-generated method stub
-		return 0;
+	public void currency(String name) {
+		curName = name;
 	}
 
 	@Override

@@ -29,6 +29,26 @@ public class MapPanel extends JPanel {
 		drawMap(dimense, numTer);
 	}
 	
+	public MapPanel(Map m, Dimension size){
+		setPreferredSize(size);
+		setMinimumSize(size);
+		setMaximumSize(size);
+		setSize(size);
+		setLayout(new FlowLayout());
+		loadMap(m);
+	}
+	
+	public void loadMap(Map m){
+		gameMap = m;
+		Coord[][] coord = gameMap.getCoordinates();
+		squareArray= new Rectangle[coord.length][coord.length];
+		for(int i=0; i<coord.length;i++){
+			for(int j=0; j<coord.length;j++){
+				squareArray[i][j]= new Rectangle(i*50,j*50,50,50);
+			}
+		}
+	}
+	
 	public Map getMap(){
 		return gameMap;
 	}

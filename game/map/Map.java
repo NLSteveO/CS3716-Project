@@ -23,6 +23,11 @@ public class Map{
     	
     }
     
+    public Map(Coord[][] c){
+    	coord = c;
+    	fillNeighbours();
+    }
+    
     // create a map according to an algorithm
     // for now it will be a standard map, in future iterations 
     // a more varied and random map will be drawn

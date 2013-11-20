@@ -17,6 +17,7 @@ public class Character{
     //public void move(Teritory t){
       
     //}
+    
 
     //returns a string that says the status of the character
     public String getStatus(){ //More status' can be added, i.e vice pres., etc
@@ -34,6 +35,18 @@ public class Character{
     
     public Happiness getHappiness(){
         return happy;
+    }
+    
+    public int getPow(){
+    	return happy.getPow();
+    }
+    
+    public int getWel(){
+    	return happy.getWel();
+    }
+    
+    public int getSol(){
+    	return happy.getSol();
     }
     
     public String getName(){

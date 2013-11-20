@@ -27,14 +27,20 @@ public class NewCharacter extends JFrame{
 	private JTextField pwrField;    // text field for power happiness
 	private JTextField welField;    // text field for wealth happiness
 	private JTextField solField;    // text field for solitude happiness
+	private JFrame frame;
+	private boolean load = false;
 	
 	
 	/**
 	 * Construct a new character
 	 */
-    public NewCharacter(){
+    public NewCharacter(JFrame f){
     	initiVariables();
-    	//add(panel());
+    	frame = f;
+    }
+    
+    public String getName(){
+    	return name.getText();
     }
     
     /**
@@ -71,7 +77,7 @@ public class NewCharacter extends JFrame{
     				c[2] = (welField.getText());
     				c[3] = (solField.getText());
     				save(c);
-        			System.exit(0);
+    				frame.dispose();
     			}
     			else{
     				
@@ -82,7 +88,7 @@ public class NewCharacter extends JFrame{
     	// A action listener for the close button
     	class CloseListener implements ActionListener{
     		public void actionPerformed(ActionEvent evt){
-    			System.exit(0);
+				frame.dispose();
     		}
     	}
     	
@@ -140,6 +146,8 @@ public class NewCharacter extends JFrame{
 	
 	public void save(String[] s){
 		File file = new File("./Characters/" + s[0] + ".txt");
+		if (load)
+			file.delete();
 	     PrintWriter newChar;
 		try {
 			newChar = new PrintWriter(file);
@@ -152,6 +160,15 @@ public class NewCharacter extends JFrame{
 			e.printStackTrace();
 		}
 	     
+	}
+	
+	public void load(Character c){
+		load = true;
+		name.setText(c.getName());
+		welSlider.setValue(c.getWel());
+		solSlider.setValue(c.getSol());
+		pwrSlider.setValue(c.getPow());
+		
 	}
     
     /**
@@ -189,17 +206,4 @@ public class NewCharacter extends JFrame{
     	main.add(center, BorderLayout.CENTER);
     	return main;
     }
-    
-    
-    /**
-     * A Main method used for testing NewCharacter
-     * @param args
-     *
-    public static void main(String[] args){
-        JFrame f = new NewCharacter();
-        f.setSize(new Dimension(500, 500));
-        f.setTitle("Create New Character");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setVisible(true);
-    }*/
 }

@@ -1,4 +1,5 @@
 import game.character.*;
+import game.character.Character;
 import game.map.*;
 
 import javax.swing.BoxLayout;
@@ -22,6 +23,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 @SuppressWarnings("serial")
 public class GameLauncher extends JFrame{
@@ -35,7 +37,7 @@ public class GameLauncher extends JFrame{
 	private JMenu file, editMenu, character, help;
 	private JMenuItem nGame, save, load, exit, edit, nChar, sChar, eChar, rules, about;
 	private Map map;
-	private int selectedChar = 1;// DONT FORGET TO FIX
+	private Character charName;// DONT FORGET TO FIX
 	
     public GameLauncher(){
     	super("Game Launcher");
@@ -72,8 +74,8 @@ public class GameLauncher extends JFrame{
     	nGame = new JMenuItem("New Game");
     	class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-            	if (selectedChar == 0){
-            	    createFrame("Error", new Dimension(300, 300));
+            	if (charName == null){
+            	    createFrame("Error", new Dimension(410, 100));
             		frame.add(new JLabel("You must first create or select a character before starting a new game."));
             	}
             	else {
@@ -164,6 +166,7 @@ public class GameLauncher extends JFrame{
 				    file = new File(f + ".txt");
 			   }
 		    PrintWriter newChar = new PrintWriter(file);
+		    newChar.println(s.length);
 			for (int j = 0; j < map.getSize(); j++){
 				for (int i = 0; i < map.getSize(); i++){
 					if (s[i][j].hasTerritory()){
@@ -189,10 +192,40 @@ public class GameLauncher extends JFrame{
         class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
                 JFileChooser fc = new JFileChooser("./Saves/");
+            	if (charName == null){
+            	    createFrame("Error", new Dimension(410, 100));
+            		frame.add(new JLabel("You must first create or select a character before loading a game."));
+            	}
+            	else {
    					 int returnVal = fc.showOpenDialog(GameLauncher.this);
    					     if (returnVal == JFileChooser.APPROVE_OPTION){
-							File file = fc.getSelectedFile();
+							try{
+								File file = fc.getSelectedFile();
+								Scanner in = new Scanner(file);
+								int size = in.nextInt();
+						    	Coord[][] coord = new Coord[size][size];
+						    	while (in.hasNext()){
+						    		for(int i=0;i<size;i++){
+							    		String s = in.next();
+						    			for(int j=0;j<size;j++){
+						    				coord[j][i] = new Coord(i, j);
+						    				if (s.substring(j, j+1).equals("G")){
+						    					coord[j][i].setTerritory(new Territory());}
+						    			}
+						    		}
+						    	}
+						    	in.close();
+						    	Map m = new Map(coord);
+						    	Dimension s = new Dimension((size*50)+6, (size*50)+28);
+						    	createFrame("Map", s);
+						    	MapPanel map = new MapPanel(m, s);
+						    	frame.add(map);
+							}catch(FileNotFoundException e){
+								e.printStackTrace();
+							}
+							
    						  }
+            	}
             }
          }
          ActionListener listener = new MenuItemListener();
@@ -235,8 +268,8 @@ public class GameLauncher extends JFrame{
     	nChar = new JMenuItem("New Character");
         class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-            	NewCharacter newC = new NewCharacter();
             	createFrame("New Character", new Dimension(500, 500));
+            	NewCharacter newC = new NewCharacter(frame);
             	frame.add(newC.panel());
             }
          }
@@ -244,7 +277,7 @@ public class GameLauncher extends JFrame{
          nChar.addActionListener(listener);
     	return nChar;
     }
-    
+        
     public JMenuItem createSelectChar(){
     	sChar = new JMenuItem("Select Character");
         class MenuItemListener implements ActionListener{
@@ -252,9 +285,21 @@ public class GameLauncher extends JFrame{
 					JFileChooser fc = new JFileChooser("./Characters/");
 					int returnVal = fc.showOpenDialog(GameLauncher.this);
 					if (returnVal == JFileChooser.APPROVE_OPTION){
-					    @SuppressWarnings("unused")
 						File file = fc.getSelectedFile();
-					}
+						Scanner in;
+						try {
+							in = new Scanner(file);
+							String name = in.nextLine();
+							int pow = Integer.parseInt(in.nextLine());
+							int wel = Integer.parseInt(in.nextLine());
+							int sol = Integer.parseInt(in.nextLine());
+							Happiness happy = new Happiness(pow, wel, sol);
+							Character c = new Character(name, happy);
+							charName = c;
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}					}
             }
          }
          ActionListener listener = new MenuItemListener();
@@ -266,7 +311,31 @@ public class GameLauncher extends JFrame{
     	eChar = new JMenuItem("Edit Character");
         class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-            	
+            	if (charName != null){
+            		File file = new File("./Characters/" + charName.getName() + ".txt");
+					Scanner in;
+					try {
+						in = new Scanner(file);
+						String name = in.nextLine();
+						int pow = Integer.parseInt(in.nextLine());
+						int wel = Integer.parseInt(in.nextLine());
+						int sol = Integer.parseInt(in.nextLine());
+						Happiness happy = new Happiness(pow, wel, sol);
+						Character c = new Character(name, happy);
+						charName = c;
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+                	createFrame("Edit Character", new Dimension(500, 500));
+                	NewCharacter newC = new NewCharacter(frame);
+                	newC.load(charName);
+                	frame.add(newC.panel());
+            	}
+            	else {
+            	    createFrame("Error", new Dimension(410, 100));
+            		frame.add(new JLabel("You must first create or select a character before editing a character."));
+            	}
             }
          }
          ActionListener listener = new MenuItemListener();
@@ -285,7 +354,7 @@ public class GameLauncher extends JFrame{
     	rules = new JMenuItem("Rules");
         class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-               JPanel rulesPanel = new JPanel();
+               JPanel rulesPanel = new JPanel(new GridLayout(5, 0));
                rulesPanel.add(new JLabel("The"));
                rulesPanel.add(new JLabel("Rules"));
                rulesPanel.add(new JLabel("Will"));

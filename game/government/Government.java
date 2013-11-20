@@ -4,16 +4,14 @@ import game.character.Character;
 
 public interface Government{
 
-    public boolean elections();
+    public void startElection();
 
-    public int taxRate();
-
-    public String type();
+    public void setTaxRate(int taxPercent);
 
     public double currency();//Was type Currency but it doesn't exist yet so temporarily changed
  
     public Character leader();
 
-    public Character[] council(); 
+    public void addCouncilMem(Character chara); 
 
 }

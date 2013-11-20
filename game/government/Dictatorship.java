@@ -4,22 +4,17 @@ import game.character.Character;
 
 public class Dictatorship implements Government{
 
+	private Character[] council;//NEED TO INITIALIZE THIS! LATER WHEN I DO MORE DICTAT STUFFF
+	private boolean containsMem;
+	private int i;
 	@Override
-	public boolean elections() {
+	public void startElection() {//probs dont need this here HEIL DICTATOR
 		// TODO Auto-generated method stub
-		return false;
 	}
 
-	@Override
-	public int taxRate() {
+	//also need get tax rate method!
+	public void setTaxRate(int taxPercent) {
 		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public String type() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -34,10 +29,28 @@ public class Dictatorship implements Government{
 		return null;
 	}
 
-	@Override
-	public Character[] council() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public void addCouncilMem(Character chara) {
+		i=0;
+		while(i<council.length){
+			if(council[i] == null){
+				council[i] = chara;
+				i=council.length;
+			}
+			i = i+1;
+		}
+	}
+	
+	public boolean isCouncilMem(Character cc){
+		for(int i=0;i<council.length;i++){
+			if(council[i].equals(cc)){
+				containsMem = true;
+			}
+			else{
+				containsMem = false;
+			}
+		}
+		return containsMem;
 	}
 
 }

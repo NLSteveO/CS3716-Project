@@ -37,7 +37,7 @@ public class GameLauncher extends JFrame{
 	private JMenu file, editMenu, character, help;
 	private JMenuItem nGame, save, load, exit, edit, nChar, sChar, eChar, rules, about;
 	private Map map;
-	private Character charName;// DONT FORGET TO FIX
+	private Character charName;
 	
     public GameLauncher(){
     	super("Game Launcher");

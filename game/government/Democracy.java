@@ -13,6 +13,11 @@ public class Democracy implements Government{//may not even need election interf
 	private Character[] council;
 	private boolean containsMem;
 	private String curName;
+	private Character leader;
+	
+	public Democracy(){
+		leader = new Character(" ",null);
+	}
 	
 	public void startElection() { //starts an election
 		votes = new String[100];
@@ -75,9 +80,13 @@ public class Democracy implements Government{//may not even need election interf
 	}
 
 	@Override
-	public Character leader() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setLeader(Character ch) {
+		leader = ch;
+		leader.updateStatus("pres");
+	}
+	
+	public Character getLeader(){
+		return leader;
 	}
 
 	

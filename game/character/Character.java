@@ -4,12 +4,18 @@ package game.character;
 public class Character{
 
     private Happiness happy;
-    //private Teritory location;
-    private Status stat;
+    //private Territory location;
     private String name;
+	private boolean president;
+	private boolean dictator;
+	private boolean civilian;
+	private boolean councilMem;
     
     public Character(String aName, Happiness h){
-        stat = new Status("civ"); //status civilian by default
+        civilian = true;//status civilian by default
+        president = false;
+		dictator = false;
+		councilMem = false;
         name = aName;
         happy = h;
     }
@@ -17,12 +23,66 @@ public class Character{
     //public void move(Teritory t){
       
     //}
-    
+ 
+	//could be more options added later
 
-    //returns a string that says the status of the character
-    public String getStat(){ //More status' can be added, i.e vice pres., etc
-    	return stat.getStatus();
-    }
+	public void updateStatus(String newStat){
+		if(newStat == "pres"){
+			president = true;
+			civilian = false;
+			dictator = false;
+			councilMem = false;
+		}
+		else if(newStat == "dict"){
+			dictator = true;
+			president = false;
+			civilian = false;
+			councilMem = false;
+		}
+		else if(newStat == "civ"){
+			civilian = true;
+			president = false;
+			dictator = false;
+			councilMem = false;
+		}
+		else if(newStat == "coun"){
+			councilMem = true;
+			civilian = false;
+			president = false;
+			dictator = false;
+		}
+	}
+	
+	public boolean isPres(){
+		return president;
+	}
+
+	public boolean isCiv(){
+		return civilian;
+	}
+
+	public boolean isDict(){
+		return dictator;
+	}
+	
+	public boolean isCoun(){
+		return councilMem;
+	}
+	
+	public String getStatus(){
+		if(isPres()){
+    		return "President";
+    	}
+    	else if(isCoun()){
+    		return "Council Member";
+    	}
+    	else if(isDict()){
+    		return "Dictator";
+    	}
+    	else{
+    		return "Civilian";
+    	}
+	}
     
     public Happiness getHappiness(){
         return happy;

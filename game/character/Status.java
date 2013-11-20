@@ -1,7 +1,7 @@
 package game.character;
 
 public class Status{
-	private String status;
+	/*private String status;
 	private boolean president;
 	private boolean dictator;
 	private boolean civilian;
@@ -80,6 +80,6 @@ public class Status{
     	else{
     		return "Civilian";
     	}
-	}
+	}*/
 
 }	 

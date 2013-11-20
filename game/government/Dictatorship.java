@@ -8,6 +8,7 @@ public class Dictatorship implements Government{
 	private boolean containsMem;
 	private int i,taxRatePer;
 	private String curName;
+	private Character leader;
 	@Override
 	public void startElection() {//probs dont need this here HEIL DICTATOR
 		// TODO Auto-generated method stub
@@ -28,12 +29,15 @@ public class Dictatorship implements Government{
 	}
 
 	@Override
-	public Character leader() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setLeader(Character ch) {
+		leader = ch;
+		leader.updateStatus("dict");
+	}
+	
+	public Character getLeader(){
+		return leader;
 	}
 
-	
 	public void addCouncilMem(Character chara) {
 		i=0;
 		while(i<council.length){

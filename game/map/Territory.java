@@ -7,6 +7,7 @@ public class Territory {
 	private int ID;
     private ArrayList<Territory> neighbours;
     private IdGen generator = IdGen.getIdGen(); 
+    private Coord loc;
     
     public Territory(){
     	ID=generator.getID();
@@ -19,8 +20,22 @@ public class Territory {
     	neighbours.add(t);
     }
     
+    public Territory (Coord c){
+    	ID=generator.getID();
+    	neighbours = new ArrayList<Territory>();
+    	loc =c;
+    }
+    
     public ArrayList<Territory> getNeighbours(){
         return neighbours;
+    }
+    
+    public Coord getLoc(){
+    	return loc;
+    }
+    
+    public void setLoc(Coord c){
+    	loc=c;
     }
     
     public int numNeighbours(){

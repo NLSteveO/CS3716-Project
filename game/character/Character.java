@@ -1,6 +1,8 @@
 package game.character;
 import game.map.Territory;
-
+import game.country.Country;
+import game.government.*;
+import java.util.ArrayList;
 public class Character{
 
     private Happiness happy;
@@ -10,6 +12,7 @@ public class Character{
 	private boolean dictator;
 	private boolean civilian;
 	private boolean councilMem;
+	private Country c;
     
     public Character(String aName, Happiness h){
         civilian = true;//status civilian by default
@@ -18,6 +21,7 @@ public class Character{
 		councilMem = false;
         name = aName;
         happy = h;
+        c = null;
     }
 
     public Territory getLocation(){
@@ -111,11 +115,10 @@ public class Character{
     	return name;
     }
 
-    public void startCountry(){
-
+    public void startCountry(Government g, ArrayList<Character> chr){
+    	c.createCountry(g, location, chr);
     }
 
     public void joinCountry(){
-
     }
 }

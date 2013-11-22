@@ -9,9 +9,9 @@ public class Dictatorship implements Government{
 	private int i,taxRatePer;
 	private String curName;
 	private Character leader;
-	@Override
-	public void startElection() {//probs dont need this here HEIL DICTATOR
-		// TODO Auto-generated method stub
+	
+	public Dictatorship(Character chr){
+		setLeader(chr);
 	}
 
 	//also need get tax rate method!

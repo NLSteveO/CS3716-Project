@@ -1,10 +1,10 @@
 package game.character;
-
+import game.map.Territory;
 
 public class Character{
 
     private Happiness happy;
-    //private Territory location;
+    private Territory location;
     private String name;
 	private boolean president;
 	private boolean dictator;
@@ -20,6 +20,13 @@ public class Character{
         happy = h;
     }
 
+    public Territory getLocation(){
+    	return location;
+    }
+    
+    public void setLocation(Territory t){
+    	location = t;
+    }
     //public void move(Teritory t){
       
     //}

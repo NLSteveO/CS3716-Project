@@ -1,15 +1,16 @@
 package game.map;
 
+import game.character.Character;
+
 import java.util.Random;
 import java.util.ArrayList;
 public class Map{
 	
 	private Coord[][] coord;
 	private int size;
-    //private ArrayList<Character> characters;
+    private ArrayList<Character> characters;
     
-    //For now, generate one of several preset maps, in future iterations random
-    //map generation may be implemented.
+    
     public Map(int numTer, int size){
     	this.size = size;
     	coord = new Coord[size][size];
@@ -23,6 +24,28 @@ public class Map{
     	
     }
     
+    // place a character randomly by picking random squares until a territory square is found 
+    // and setting a character there
+    public void placeCharacter(Character c){
+    	boolean truth = true;
+    	Random r = new Random();
+    	while(truth){
+    		int x = r.nextInt(size);
+    		int y = r.nextInt(size);
+    		if(coord[x][y].hasTerritory()){
+    			c.setLocation(coord[x][y].getTerritory());
+    			characters.add(c);
+    			truth=false;
+    		}
+    	}
+    }
+    
+    // place a character on the specified territory
+    public void placeCharacter(Character c, Territory t){
+    	c.setLocation(t);
+    	characters.add(c);
+    }
+    
     public Map(Coord[][] c){
     	coord = c;
     	fillNeighbours();
@@ -31,7 +54,6 @@ public class Map{
     // create a map according to an algorithm
     // for now it will be a standard map, in future iterations 
     // a more varied and random map will be drawn
-    
     
     public void  createMap(int numTer){
     	if(numTer>coord.length*coord.length)
@@ -42,7 +64,7 @@ public class Map{
     			x=r.nextInt(coord.length);
     			y=r.nextInt(coord.length);
     			//System.out.print("("+x+","+y+"): ");
-    			coord[x][y].setTerritory(new Territory());
+    			coord[x][y].setTerritory(new Territory(coord[x][y]));
     			//System.out.println("Territory:"+coord[x][y].getTerritory().getID());
     		}
     }
@@ -83,14 +105,17 @@ public class Map{
 				coord[k][l].getTerritory().addNeighbour(coord[i][j].getTerritory());
 	}
     
-
-    public void updateMap(){
-        
-    }
-
     public ArrayList<Territory> legalMoves(Territory t){
         ArrayList<Territory> ans = t.getNeighbours();
         return ans;
+    }
+    
+    public boolean moveCharacter(Character c, Territory t){
+    	if(isLegalMove(c.getLocation(),t)){
+    		c.setLocation(t);
+    		return true;
+    	}
+    	return false;
     }
     
     public boolean isLegalMove(Territory start, Territory end){

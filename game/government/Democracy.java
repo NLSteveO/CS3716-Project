@@ -50,7 +50,7 @@ public class Democracy implements Government{//may not even need election interf
 	public String getResults(){//returns a string with the name of the winner of the election
 		for(int j=0; j < candits.length; j++){
 			for(int k=0; k<votes.length; k++){
-				if(votes[k].toLowerCase() == candits[j]){
+				if(votes[k].toLowerCase().equals(candits[j])){
 					votesForCan[j] = votesForCan[j] + 1;
 				}
 			}

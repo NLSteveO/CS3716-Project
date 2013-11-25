@@ -21,6 +21,7 @@ public class Territory {
     }
     
     public String getName(){return Name;}
+    
     public boolean isNeighbour(Territory query){
         for(int i=0;i<neighbours.size();i++){
             if(neighbours.get(i).equals(query))
@@ -29,7 +30,6 @@ public class Territory {
         return false;
     }
     
-
  
     public boolean equals(Territory t){
     	if(t.getName().equals(this.getName()))

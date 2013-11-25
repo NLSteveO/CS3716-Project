@@ -14,10 +14,14 @@ public class Map{
     	createMap();
     }
     
-    // place a character randomly by picking random squares until a territory square is found 
-    // and setting a character there
     public void placeCharacter(Character c){
     
+    }
+    
+    public Territory getTerrbyCoord(int x, int y){
+    		
+    	
+    		return terr.get(0);
     }
     
     // place a character on the specified territory
@@ -106,6 +110,7 @@ public class Map{
     	neighbours(terr.get(23),terr.get(24));
     	neighbours(terr.get(22),terr.get(24));
     	neighbours(terr.get(21),terr.get(24));
+    	neighbours(terr.get(0),terr.get(24));
     	terr.add(new Territory("Helgan"));
     	neighbours(terr.get(22),terr.get(25));
     	terr.add(new Territory("Ococo"));

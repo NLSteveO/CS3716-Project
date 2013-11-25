@@ -4,44 +4,23 @@ import java.util.ArrayList;
 public class Territory {
 	
 
-	private int ID;
+	private String Name;
     private ArrayList<Territory> neighbours;
-    private IdGen generator = IdGen.getIdGen(); 
-    private Coord loc;
     
-    public Territory(){
-    	ID=generator.getID();
+    public Territory(String Name){
     	neighbours = new ArrayList<Territory>();
-    }
-    
-    public Territory(Territory t){
-    	ID=generator.getID();
-    	neighbours= new ArrayList<Territory>();
-    	neighbours.add(t);
-    }
-    
-    public Territory (Coord c){
-    	ID=generator.getID();
-    	neighbours = new ArrayList<Territory>();
-    	loc =c;
-    }
+    	this.Name=Name;
+    }  
     
     public ArrayList<Territory> getNeighbours(){
         return neighbours;
-    }
-    
-    public Coord getLoc(){
-    	return loc;
-    }
-    
-    public void setLoc(Coord c){
-    	loc=c;
     }
     
     public int numNeighbours(){
     	return neighbours.size();
     }
     
+    public String getName(){return Name;}
     public boolean isNeighbour(Territory query){
         for(int i=0;i<neighbours.size();i++){
             if(neighbours.get(i).equals(query))
@@ -51,12 +30,9 @@ public class Territory {
     }
     
 
-    public int getID(){
-    	return ID;
-    }
-    
+ 
     public boolean equals(Territory t){
-    	if(t.getID()==this.getID())
+    	if(t.getName().equals(this.getName()))
     		return true;
     	return false;
     }

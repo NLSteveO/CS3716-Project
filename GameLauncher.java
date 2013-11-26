@@ -1,9 +1,9 @@
 import game.character.*;
 import game.character.Character;
-import game.map.*;
+//import game.map.*;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
+//import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,7 +11,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+//import javax.swing.JTextField;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -20,10 +20,10 @@ import javax.swing.SwingUtilities;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
+//import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+//import java.io.PrintWriter;
 import java.util.Scanner;
 
 @SuppressWarnings("serial")
@@ -37,7 +37,7 @@ public class GameLauncher extends JFrame{
 	private JMenuBar menu;
 	private JMenu file, editMenu, character, help;
 	private JMenuItem nGame, save, load, exit, edit, nChar, sChar, eChar, rules, about;
-	private Map map;
+//	private Map map;
 	private Character charName;// DONT FORGET TO FIX
 	
     public GameLauncher(){
@@ -91,7 +91,7 @@ public class GameLauncher extends JFrame{
     	return nGame;
     }
     
-    public void newGame(){
+   /** public void newGame(){
     	createFrame("New Game", new Dimension(300, 300));
 		main = new JPanel();
 		main.setLayout(new GridLayout(3,2));
@@ -137,20 +137,20 @@ public class GameLauncher extends JFrame{
     	frame.remove(main);
     	frame.add(map);
     	frame.repaint();
-    }
+    }*/
     
     public JMenuItem createSaveItem(){
     	save = new JMenuItem("Save");
     	class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-   				    JFileChooser fc = new JFileChooser("./Saves/");
-                int returnVal = fc.showSaveDialog(GameLauncher.this);
-                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+   				//    JFileChooser fc = new JFileChooser("./Saves/");
+               // int returnVal = fc.showSaveDialog(GameLauncher.this);
+                   /** if (returnVal == JFileChooser.APPROVE_OPTION) {
                     	File file = fc.getSelectedFile();
 						Coord[][] m = new Coord[map.getSize()][map.getSize()];
 						m = map.getCoordinates();
                     	save(m, file);
-                    }
+                    }*/
             }
          }
          ActionListener listener = new MenuItemListener();
@@ -158,7 +158,7 @@ public class GameLauncher extends JFrame{
     	return save;
     }
     
-    public void save(Coord[][] s, File f){
+    /**public void save(Coord[][] s, File f){
 		try {
 			File file;
 		      if (f.getName().contains(".txt")){
@@ -187,14 +187,14 @@ public class GameLauncher extends JFrame{
 			e.printStackTrace();
 		}
 	     
-	}
+	}*/
     
     public JMenuItem createLoadItem(){
     	load = new JMenuItem("Load");
         class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-                JFileChooser fc = new JFileChooser("./Saves/");
-            	if (charName == null){
+             //   JFileChooser fc = new JFileChooser("./Saves/");
+            	/**if (charName == null){
             	    createFrame("Error", new Dimension(410, 100));
             		frame.add(new JLabel("You must first create or select a character before loading a game."));
             	}
@@ -227,7 +227,7 @@ public class GameLauncher extends JFrame{
 							}
 							
    						  }
-            	}
+            	}*/
             }
          }
          ActionListener listener = new MenuItemListener();
@@ -400,9 +400,9 @@ public class GameLauncher extends JFrame{
     	frame.setVisible(true);
     }
     
-    public void mouseClicked(MouseEvent e){
+   /** public void mouseClicked(MouseEvent e){
     	charName.place(e.getX(), e.getY());
-    }
+    }*/
         
     public static void main(String[] args){
     	SwingUtilities.invokeLater(new Runnable(){

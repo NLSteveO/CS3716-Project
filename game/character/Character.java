@@ -1,86 +1,114 @@
 package game.character;
-
-import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
+import game.map.Territory;
 
 public class Character{
 
     private Happiness happy;
-    //private Teritory location;
-    private Status stat;
+    private Territory location;
     private String name;
-    private int x, y;
-    boolean placed = false;
-    BufferedImage man;
+        private boolean president;
+        private boolean dictator;
+        private boolean civilian;
+        private boolean councilMem;
     
     public Character(String aName, Happiness h){
-        stat = new Status("civ"); //status civilian by default
+        civilian = true;//status civilian by default
+        president = false;
+                dictator = false;
+                councilMem = false;
         name = aName;
         happy = h;
-        try {
-			man = ImageIO.read(new File("images/mana.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
     }
 
+    public Territory getLocation(){
+            return location;
+    }
+    
+    public void setLocation(Territory t){
+            location = t;
+    }
     //public void move(Teritory t){
       
     //}
-    
-    public void place(int x, int y){
-    	if (!placed){
-    		placed = true;
-    	}
-    	this.x = x;
-    	this.y = y;
-    	System.out.println(x + " " + y);    	
-    }
-    
-    public void draw(Graphics2D g) {
-    	if (placed){
-			g.drawImage(man.getSubimage(0, 0, 25, 28),  x*2-13,  y*2-14,  null);
-		}
-    }
+ 
+        //could be more options added later
 
-    //returns a string that says the status of the character
-    public String getStatus(){ //More status' can be added, i.e vice pres., etc
-    	if(stat.isPres()){
-    		return "President";
-    	}
-    	else if(stat.isCiv()){
-    		return "Civilian";
-    	}
-    	else if(stat.isDict()){
-    		return "Dictator";
-    	}
-    	else return "";
-    }
+        public void updateStatus(String newStat){
+                if(newStat == "pres"){
+                        president = true;
+                        civilian = false;
+                        dictator = false;
+                        councilMem = false;
+                }
+                else if(newStat == "dict"){
+                        dictator = true;
+                        president = false;
+                        civilian = false;
+                        councilMem = false;
+                }
+                else if(newStat == "civ"){
+                        civilian = true;
+                        president = false;
+                        dictator = false;
+                        councilMem = false;
+                }
+                else if(newStat == "coun"){
+                        councilMem = true;
+                        civilian = false;
+                        president = false;
+                        dictator = false;
+                }
+        }
+        
+        public boolean isPres(){
+                return president;
+        }
+
+        public boolean isCiv(){
+                return civilian;
+        }
+
+        public boolean isDict(){
+                return dictator;
+        }
+        
+        public boolean isCoun(){
+                return councilMem;
+        }
+        
+        public String getStatus(){
+                if(isPres()){
+                    return "President";
+            }
+            else if(isCoun()){
+                    return "Council Member";
+            }
+            else if(isDict()){
+                    return "Dictator";
+            }
+            else{
+                    return "Civilian";
+            }
+        }
     
     public Happiness getHappiness(){
         return happy;
     }
     
     public int getPow(){
-    	return happy.getPow();
+            return happy.getPow();
     }
     
     public int getWel(){
-    	return happy.getWel();
+            return happy.getWel();
     }
     
     public int getSol(){
-    	return happy.getSol();
+            return happy.getSol();
     }
     
     public String getName(){
-    	return name;
+            return name;
     }
 
     public void startCountry(){

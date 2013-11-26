@@ -1,14 +1,20 @@
-import java.awt.Color;
+import game.map.Map;
+import game.map.Territory;
+
+
+//import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
+//import java.io.FileNotFoundException;
 import java.io.IOException;
+//import java.util.ArrayList;
+//import java.util.Scanner;
+
+
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
@@ -28,6 +34,7 @@ public class Play extends Game {
 	int column, row;
 	int columns, rows;
 	boolean placed = false;
+	Map m = new Map();
 		
 	public Play() {
 		title = "Play";
@@ -45,15 +52,18 @@ public class Play extends Game {
 	}
 	
 	public void mouseClicked(MouseEvent e){
-		if (!placed) placed = true;
+		if (!placed)placed = true;
 		int a = e.getX();
 		int b = e.getY();
 		if (map.getRGB(a, b) != -12086273){
 			column = a;
 			row = b;
+			System.out.println(m.getTerrbyCoord(a, b).getName());
+			ArrayList<Territory> n = m.getTerrbyCoord(a, b).getNeighbours();
+			for (Territory x : n)
+				System.out.print(x.getName() + " ");
+			System.out.println();
 		}
-		System.out.println(a + "  " + b);
-		System.out.println(column + "  " + row + " " + rows);
 	}
 
 	@Override

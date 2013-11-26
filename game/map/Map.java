@@ -43,7 +43,8 @@ public class Map{
     }
     
     // create the predetermined complicated map thing.
-    private void  createMap(){
+    @SuppressWarnings("unused")
+	private void  createMap(){
             double[] x,y;
             terr.add(new Territory("Northrend",
                             new Area(4,x=new double[]{82,82,192,192},y=new double[]{28,140,28,140})));

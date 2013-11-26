@@ -35,6 +35,7 @@ public class Play extends Game {
 	int columns, rows;
 	boolean placed = false;
 	Map m = new Map();
+	private Territory currTerr;
 		
 	public Play() {
 		title = "Play";
@@ -52,17 +53,37 @@ public class Play extends Game {
 	}
 	
 	public void mouseClicked(MouseEvent e){
-		if (!placed)placed = true;
-		int a = e.getX();
-		int b = e.getY();
-		if (map.getRGB(a, b) != -12086273){
-			column = a;
-			row = b;
-			System.out.println(m.getTerrbyCoord(a, b).getName());
-			ArrayList<Territory> n = m.getTerrbyCoord(a, b).getNeighbours();
-			for (Territory x : n)
-				System.out.print(x.getName() + " ");
-			System.out.println();
+		if (!placed){
+			placed = true;
+			int a = e.getX();
+			int b = e.getY();
+			if (map.getRGB(a, b) != -12086273){
+				column = a;
+				row = b;
+				currTerr = m.getTerrbyCoord(a, b);
+				System.out.println(m.getTerrbyCoord(a, b).getName());
+				ArrayList<Territory> n = m.getTerrbyCoord(a, b).getNeighbours();
+				for (Territory x : n)
+					System.out.print(x.getName() + " ");
+				System.out.println();
+			}
+		}
+		else{
+			int a = e.getX();
+			int b = e.getY();
+			Territory t = m.getTerrbyCoord(a, b);
+			if (map.getRGB(a, b) != -12086273){
+				if (currTerr.isNeighbour(t) && placed){
+					column = a;
+					row = b;
+					currTerr = m.getTerrbyCoord(a, b);
+					System.out.println(m.getTerrbyCoord(a, b).getName());
+					ArrayList<Territory> n = m.getTerrbyCoord(a, b).getNeighbours();
+					for (Territory x : n)
+						System.out.print(x.getName() + " ");
+					System.out.println();
+				}
+			}
 		}
 	}
 

@@ -1,9 +1,9 @@
 import game.character.*;
 import game.character.Character;
-//import game.map.*;
+import game.map.*;
 
 import javax.swing.BoxLayout;
-//import javax.swing.JButton;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,7 +11,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-//import javax.swing.JTextField;
+import javax.swing.JTextField;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -37,7 +37,7 @@ public class GameLauncher extends JFrame{
 	private JMenuBar menu;
 	private JMenu file, editMenu, character, help;
 	private JMenuItem nGame, save, load, exit, edit, nChar, sChar, eChar, rules, about;
-//	private Map map;
+	private Map map;
 	private Character charName;// DONT FORGET TO FIX
 	
     public GameLauncher(){
@@ -91,7 +91,7 @@ public class GameLauncher extends JFrame{
     	return nGame;
     }
     
-   /** public void newGame(){
+    public void newGame(){
     	createFrame("New Game", new Dimension(300, 300));
 		main = new JPanel();
 		main.setLayout(new GridLayout(3,2));
@@ -137,7 +137,7 @@ public class GameLauncher extends JFrame{
     	frame.remove(main);
     	frame.add(map);
     	frame.repaint();
-    }*/
+    }
     
     public JMenuItem createSaveItem(){
     	save = new JMenuItem("Save");
@@ -248,13 +248,13 @@ public class GameLauncher extends JFrame{
     }
     
     public JMenu createEditMenu(){
-    	editMenu = new JMenu("Edit");
+    	editMenu = new JMenu("Country");
     	editMenu.add(createEditItem());
     	return editMenu;
     }
     
     public JMenuItem createEditItem(){
-    	edit = new JMenuItem("Edit");
+    	edit = new JMenuItem("Settle Country");
     	return edit;
     }
     

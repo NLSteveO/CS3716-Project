@@ -10,7 +10,7 @@ import game.map.*;
 
 @SuppressWarnings("serial")
 public class MapPanel extends JPanel {
-	Dimension WinDem;
+	/*Dimension WinDem;
 	Dimension TerDem;
 	Map gameMap;
 	int numTer;
@@ -82,5 +82,5 @@ public class MapPanel extends JPanel {
 			}
 		}
 	}
-	
+*/	
 }

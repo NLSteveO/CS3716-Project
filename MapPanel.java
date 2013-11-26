@@ -77,8 +77,8 @@ public class MapPanel extends JPanel {
 					g.setColor(Color.blue);
 				
 				g.fillRect((int)squareArray[i][j].getX(), (int)squareArray[i][j].getY(), (int)squareArray[i][j].getWidth(), (int)squareArray[i][j].getHeight());
-				g.setColor(Color.black);
-				g.drawRect((int)squareArray[i][j].getX(), (int)squareArray[i][j].getY(), (int)squareArray[i][j].getWidth(), (int)squareArray[i][j].getHeight());
+				//g.setColor(Color.black);
+				//g.drawRect((int)squareArray[i][j].getX(), (int)squareArray[i][j].getY(), (int)squareArray[i][j].getWidth(), (int)squareArray[i][j].getHeight());
 			}
 		}
 	}

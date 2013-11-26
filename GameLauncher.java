@@ -20,6 +20,7 @@ import javax.swing.SwingUtilities;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -79,7 +80,8 @@ public class GameLauncher extends JFrame{
             		frame.add(new JLabel("You must first create or select a character before starting a new game."));
             	}
             	else {
-            		newGame();
+            		//newGame();
+            		Play.main(null);
             	}
             }
         }
@@ -396,6 +398,10 @@ public class GameLauncher extends JFrame{
     	frame.setResizable(false);
     	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     	frame.setVisible(true);
+    }
+    
+    public void mouseClicked(MouseEvent e){
+    	charName.place(e.getX(), e.getY());
     }
         
     public static void main(String[] args){

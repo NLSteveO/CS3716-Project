@@ -38,7 +38,8 @@ public class GameLauncher extends JFrame{
 	private JMenu file, editMenu, character, help;
 	private JMenuItem nGame, save, load, exit, edit, nChar, sChar, eChar, rules, about;
 	private Map map;
-	private Character charName;// DONT FORGET TO FIX
+	private Character[] charName;
+	private int numChar = 0;
 	
     public GameLauncher(){
     	super("Game Launcher");
@@ -47,6 +48,8 @@ public class GameLauncher extends JFrame{
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        charName = new Character[100];
     	
         bg = new BackgroundPanel("./Images/flag.jpg", size);
     	add(bg);
@@ -80,7 +83,7 @@ public class GameLauncher extends JFrame{
             		frame.add(new JLabel("You must first create or select a character before starting a new game."));
             	}
             	else {
-            		//newGame();
+            		Play p = new Play(charName);
             		Play.main(null);
             	}
             }
@@ -114,7 +117,7 @@ public class GameLauncher extends JFrame{
 		
 		class OkButtonListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-            	createMap(Integer.parseInt(terrField.getText()), Integer.parseInt(sizeField.getText()));
+            	//createMap(Integer.parseInt(terrField.getText()), Integer.parseInt(sizeField.getText()));
             }
          }
          ActionListener okListener = new OkButtonListener();
@@ -129,7 +132,7 @@ public class GameLauncher extends JFrame{
          cancel.addActionListener(listener);
     }
     
-    public void createMap(int t, int s){
+   /** public void createMap(int t, int s){
     	MapPanel map = new MapPanel(new Dimension(500, 500), t, s);
     	this.map = map.getMap();
     	frame.setTitle("Map");
@@ -137,7 +140,7 @@ public class GameLauncher extends JFrame{
     	frame.remove(main);
     	frame.add(map);
     	frame.repaint();
-    }
+    }*/
     
     public JMenuItem createSaveItem(){
     	save = new JMenuItem("Save");
@@ -281,7 +284,7 @@ public class GameLauncher extends JFrame{
     }
         
     public JMenuItem createSelectChar(){
-    	sChar = new JMenuItem("Select Character");
+    	sChar = new JMenuItem("Add Character");
         class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
 					JFileChooser fc = new JFileChooser("./Characters/");
@@ -297,9 +300,10 @@ public class GameLauncher extends JFrame{
 							int sol = Integer.parseInt(in.nextLine());
 							Happiness happy = new Happiness(pow, wel, sol);
 							Character c = new Character(name, happy);
-							charName = c;
+							System.out.println(c.getName() + numChar);
+							charName[numChar] = c;
+							numChar++;
 						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}					}
             }
@@ -313,8 +317,10 @@ public class GameLauncher extends JFrame{
     	eChar = new JMenuItem("Edit Character");
         class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-            	if (charName != null){
-            		File file = new File("./Characters/" + charName.getName() + ".txt");
+            	JFileChooser fc = new JFileChooser("./Characters/");
+				int returnVal = fc.showOpenDialog(GameLauncher.this);
+				if (returnVal == JFileChooser.APPROVE_OPTION){
+					File file = fc.getSelectedFile();
 					Scanner in;
 					try {
 						in = new Scanner(file);
@@ -324,19 +330,13 @@ public class GameLauncher extends JFrame{
 						int sol = Integer.parseInt(in.nextLine());
 						Happiness happy = new Happiness(pow, wel, sol);
 						Character c = new Character(name, happy);
-						charName = c;
+						createFrame("Edit Character", new Dimension(500, 500));
+						NewCharacter newC = new NewCharacter(frame);
+						newC.load(c);
+						frame.add(newC.panel());
 					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-                	createFrame("Edit Character", new Dimension(500, 500));
-                	NewCharacter newC = new NewCharacter(frame);
-                	newC.load(charName);
-                	frame.add(newC.panel());
-            	}
-            	else {
-            	    createFrame("Error", new Dimension(410, 100));
-            		frame.add(new JLabel("You must first create or select a character before editing a character."));
             	}
             }
          }

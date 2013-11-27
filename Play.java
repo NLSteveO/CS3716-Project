@@ -1,18 +1,14 @@
 import game.map.Map;
 import game.map.Territory;
 
-
-//import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-//import java.io.FileNotFoundException;
 import java.io.IOException;
-//import java.util.ArrayList;
-//import java.util.Scanner;
 
+import game.character.Character;
 
 import java.util.ArrayList;
 
@@ -20,68 +16,76 @@ import javax.imageio.ImageIO;
 
 import org.game.engine.Game;
 import org.game.engine.GameApplication;
+import org.game.engine.MessageCenter;
 
 public class Play extends Game {
 	
 	public static void main(String[] args) {
-		GameApplication.start(new Play());
+		GameApplication.start(new Play(character));
 	}
 	
-	BufferedImage man;
+	BufferedImage[] man = new BufferedImage[4];
 	BufferedImage map;
 	int frame, c;
 	int reqDir, curDir;
-	int column, row;
 	int columns, rows;
-	boolean placed = false;
 	Map m = new Map();
-	private Territory currTerr;
+	static Character[] character;
+	Character[] characters;
+	MessageCenter mc = new MessageCenter();
+	int turnNum, numChar;
+	Character turn;
 		
-	public Play() {
+	public Play(Character[] ch) {
+		character = ch;
+		characters = ch;
 		title = "Play";
 		frame = 0;
 		c = 0;
 		curDir = reqDir = KeyEvent.VK_RIGHT;
 		width = 800;
 		height = 608;
+		turnNum = 0;
+		turn = characters[turnNum];
 		try {
-			man = ImageIO.read(new File("images/mana.png"));
+			man[0] = ImageIO.read(new File("images/man1.png"));
+			man[1] = ImageIO.read(new File("images/man2.png"));
+			man[2] = ImageIO.read(new File("images/man3.png"));
+			man[3] = ImageIO.read(new File("images/man4.png"));
 			map = ImageIO.read(new File("images/MapImage.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		for (Character x : characters){
+			if (x != null) numChar++;
+		}System.out.println(numChar);
+		System.out.println("Player " + turn.getName() + "'s turn..");
+	}
+	
+	public void nextTurn(){
+		turnNum++;
+		if (turnNum >= numChar) turnNum = 0;
+		turn = characters[turnNum];
+		System.out.println(numChar);
+		System.out.println("Player " + turn.getName() + "'s turn.");
 	}
 	
 	public void mouseClicked(MouseEvent e){
-		if (!placed){
-			placed = true;
-			int a = e.getX();
-			int b = e.getY();
-			if (map.getRGB(a, b) != -12086273){
-				column = a;
-				row = b;
-				currTerr = m.getTerrbyCoord(a, b);
-				System.out.println(m.getTerrbyCoord(a, b).getName());
-				ArrayList<Territory> n = m.getTerrbyCoord(a, b).getNeighbours();
-				for (Territory x : n)
-					System.out.print(x.getName() + " ");
-				System.out.println();
+		int a = e.getX();
+		int b = e.getY();
+		if (map.getRGB(a, b) != -12086273){
+			if (!characters[turnNum].getPlaced()){
+				characters[turnNum].setPlaced();
+				characters[turnNum].setCoord(a, b);
+				characters[turnNum].setLocation(m.getTerrbyCoord(a, b));
+				nextTurn();
 			}
-		}
-		else{
-			int a = e.getX();
-			int b = e.getY();
-			Territory t = m.getTerrbyCoord(a, b);
-			if (map.getRGB(a, b) != -12086273){
-				if (currTerr.isNeighbour(t) && placed){
-					column = a;
-					row = b;
-					currTerr = m.getTerrbyCoord(a, b);
-					System.out.println(m.getTerrbyCoord(a, b).getName());
-					ArrayList<Territory> n = m.getTerrbyCoord(a, b).getNeighbours();
-					for (Territory x : n)
-						System.out.print(x.getName() + " ");
-					System.out.println();
+			else{
+				Territory t = m.getTerrbyCoord(a, b);
+				if (characters[turnNum].getLocation() == t || characters[turnNum].getLocation().isNeighbour(t)){// && characters[turnNum].getPlaced()){
+					characters[turnNum].setCoord(a, b);
+					characters[turnNum].setLocation(m.getTerrbyCoord(a, b));
+					nextTurn();
 				}
 			}
 		}
@@ -111,8 +115,10 @@ public class Play extends Game {
 	@Override
 	public void draw(Graphics2D g) {
 		g.drawImage(map, 0, 0, null);
-		if (placed){
-			g.drawImage(man.getSubimage((c)*24, (curDir-37)*29, 25, 28),  column-13,  row-14,  null);
+		for(int i = 0; i < numChar; i++){
+			if (characters[i].getPlaced()){
+				g.drawImage(man[i].getSubimage((c)*24, (curDir-37)*29, 25, 28),  characters[i].getCoord().getX()-13,  characters[i].getCoord().getY()-14,  null);
+			}
 		}
 	}
 

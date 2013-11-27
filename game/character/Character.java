@@ -1,4 +1,5 @@
 package game.character;
+import game.map.Coord;
 import game.map.Territory;
 
 public class Character{
@@ -10,6 +11,8 @@ public class Character{
         private boolean dictator;
         private boolean civilian;
         private boolean councilMem;
+        private boolean placed;
+        private Coord coord;
     
     public Character(String aName, Happiness h){
         civilian = true;//status civilian by default
@@ -18,10 +21,29 @@ public class Character{
                 councilMem = false;
         name = aName;
         happy = h;
+        placed = false;
+        coord = new Coord(0, 0);
     }
 
     public Territory getLocation(){
             return location;
+    }
+    
+    public Coord getCoord(){
+    	return coord;
+    }
+    
+    public void setCoord(int x, int y){
+    	coord.setX(x);
+    	coord.setY(y);
+    }
+    
+    public boolean getPlaced(){
+    	return placed;
+    }
+    
+    public void setPlaced(){
+    	placed = true;
     }
     
     public void setLocation(Territory t){

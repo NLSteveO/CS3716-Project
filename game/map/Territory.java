@@ -6,10 +6,12 @@ public class Territory {
 
 	private String Name;
     private ArrayList<Territory> neighbours;
+    private Area arr;
     
-    public Territory(String Name){
+    public Territory(String Name,Area n){
     	neighbours = new ArrayList<Territory>();
     	this.Name=Name;
+    	arr = n;
     }  
     
     public ArrayList<Territory> getNeighbours(){
@@ -21,6 +23,7 @@ public class Territory {
     }
     
     public String getName(){return Name;}
+    
     public boolean isNeighbour(Territory query){
         for(int i=0;i<neighbours.size();i++){
             if(neighbours.get(i).equals(query))
@@ -29,7 +32,8 @@ public class Territory {
         return false;
     }
     
-
+    public Area getArea(){return arr;}
+    
  
     public boolean equals(Territory t){
     	if(t.getName().equals(this.getName()))

@@ -12,6 +12,7 @@ public class Country{
     @SuppressWarnings("unused")
 	private Territory ter;
     private ArrayList<Character> citizens;
+    private final int MINIMUM_CITIZENS = 10;
     
     public Country(Government g, Territory t){
         gov = g;
@@ -20,7 +21,7 @@ public class Country{
     }
 
     public void createCountry(Government g, Territory t, ArrayList<Character> initialCitizens){
-        if(initialCitizens.size() > 10){
+        if(initialCitizens.size() > MINIMUM_CITIZENS){
         	@SuppressWarnings("unused")
         	Country c = new Country(g, t);
         	for(int i = 0; i < initialCitizens.size(); i++){

@@ -41,9 +41,21 @@ public class Country{
     	}
     }
     
+    public Government getGovernment(){
+    	return gov;
+    }
+    
+    public Territory getTerritory(){
+    	return ter;
+    }
+    
     public boolean meetsRequirements(Character chr){
     	boolean met = false;
     	met = true;
     	return met;
+    }
+    
+    public void setRequirements(){
+    	
     }
 }

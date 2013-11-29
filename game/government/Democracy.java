@@ -17,6 +17,7 @@ public class Democracy implements Government{//may not even need election interf
 	
 	public Democracy(){
 		leader = new Character(" ",null);
+		council = new Character[5]; //IS THIS ALL I NEED TO DO? CHECK TIM
 	}
 	
 	public void startElection() { //starts an election

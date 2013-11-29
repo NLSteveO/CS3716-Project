@@ -12,6 +12,7 @@ public class Dictatorship implements Government{
 	
 	public Dictatorship(Character chr){
 		setLeader(chr);
+		council = new Character[5]; ///IS THIS ALL I NEED TO DO? CHECK TIM!
 	}
 
 	//also need get tax rate method!

@@ -12,7 +12,6 @@ import game.character.Character;
 import game.country.Country;
 import game.engine.Game;
 import game.engine.GameApplication;
-import game.engine.MessageCenter;
 
 import javax.imageio.ImageIO;
 
@@ -31,7 +30,6 @@ public class Play extends Game {
 	Map m = new Map();
 	static Character[] character;
 	Character[] characters;
-	MessageCenter mc = new MessageCenter();
 	int turnNum, numChar;
 	Character turn;
 		

@@ -2,6 +2,8 @@ package game;
 import game.map.Map;
 import game.map.Territory;
 
+import java.util.ArrayList;
+
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -67,6 +69,19 @@ public class Play extends Game {
 		turn = characters[turnNum];
 		System.out.println("Player " + turn.getName() + "'s turn.");
 		updateMSG("Player " + turn.getName() + "'s turn.");
+		
+		ArrayList<Territory> neighbours = turn.getLocation().getNeighbours();
+		neighbours.add(turn.getLocation());
+		for(Character c : characters){
+			for(Territory t: neighbours){
+				if(c.getLocation().equals(t) && c.getSettle()){
+					CountryFrame(c.getLocation())
+				}
+			}
+		}
+		
+		
+		
 	}
 	
 	public void updateMSG(String t){
@@ -101,12 +116,10 @@ public class Play extends Game {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_S && !characters[turnNum].getLocation().isOccupied()){
-			if(askPermissionSettle()){
 			System.out.println(characters[turnNum].getName() + " Settled a Country");
 			characters[turnNum].getLocation().setOccupied();
 			Country c = new Country(characters[turnNum].getLocation(), "UnterLand");
 			System.out.println(c.getTerr().getName()+"\n"+ c.getName()); //just so its not unused
-			}
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_G && characters[turnNum].getLocation().isOccupied()){
 			System.out.println("Establish Government");

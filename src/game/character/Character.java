@@ -13,6 +13,7 @@ public class Character{
         private boolean councilMem;
         private boolean placed;
         private Coord coord;
+        private boolean settle;
     
     public Character(String aName, Happiness h){
         civilian = true;//status civilian by default
@@ -32,6 +33,9 @@ public class Character{
     public Coord getCoord(){
     	return coord;
     }
+    
+    public boolean getSettle(){return settle;}
+    public void changeSettle(){settle=!settle;}
     
     public void setCoord(int x, int y){
     	coord.setX(x);

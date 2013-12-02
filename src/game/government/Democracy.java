@@ -50,6 +50,7 @@
 	    
 	    public String getResults(){//returns a string with the name of the winner of the election
 	      for(int j=0; j < candits.length; j++){
+	    	  votesForCan[j]=0;
 	        for(int k=0; k<votes.length; k++){
 	          if(votes[k].toLowerCase().equals(candits[j])){
 	            votesForCan[j] = votesForCan[j] + 1;

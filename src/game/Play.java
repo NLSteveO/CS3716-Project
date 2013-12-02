@@ -15,7 +15,6 @@ import game.engine.GameApplication;
 import game.engine.MessageCenter;
 
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
 
 public class Play extends Game {
 	
@@ -67,13 +66,11 @@ public class Play extends Game {
 		if (turnNum >= numChar) turnNum = 0;
 		turn = characters[turnNum];
 		System.out.println("Player " + turn.getName() + "'s turn.");
-		mc.sendMsg("Player " + turn.getName() + "'s turn.");
-		mc.repaint();
+		updateMSG("Player " + turn.getName() + "'s turn.");
 	}
 	
-	public JPanel createMC(){
-		JPanel mc = new JPanel();
-		return mc;
+	public void updateMSG(String t){
+		GameApplication.updateMSG(t);
 	}
 	
 	public void mouseClicked(MouseEvent e){
@@ -103,6 +100,7 @@ public class Play extends Game {
 			System.out.println(characters[turnNum].getName() + " Settled a Country");
 			characters[turnNum].getLocation().setOccupied();
 			Country c = new Country(characters[turnNum].getLocation());
+			c.getTerr(); //just so its not unused
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_G && characters[turnNum].getLocation().isOccupied()){
 			System.out.println("Establish Government");

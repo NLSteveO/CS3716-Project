@@ -24,12 +24,16 @@
       return taxRatePer;
     }
   
-    @Override
+    
     public void currency(String name) {
       curName = name;
     }
+    
+    public String getCurrency() {
+	      return curName;
+	}
   
-    @Override
+    
     public void setLeader(Character ch) {
       leader = ch;
       leader.updateStatus("dict");

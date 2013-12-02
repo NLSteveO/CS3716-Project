@@ -94,13 +94,19 @@ public class Play extends Game {
 		}
 	}
 
+	// MAKE CERTIAN WE CHANGE THIS< NOT ALWAYS TRUE
+	public boolean askPermissionSettle(){
+		return true;
+	}
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_S && !characters[turnNum].getLocation().isOccupied()){
+			if(askPermissionSettle()){
 			System.out.println(characters[turnNum].getName() + " Settled a Country");
 			characters[turnNum].getLocation().setOccupied();
-			Country c = new Country(characters[turnNum].getLocation());
-			c.getTerr(); //just so its not unused
+			Country c = new Country(characters[turnNum].getLocation(), "UnterLand");
+			System.out.println(c.getTerr().getName()+"\n"+ c.getName()); //just so its not unused
+			}
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_G && characters[turnNum].getLocation().isOccupied()){
 			System.out.println("Establish Government");

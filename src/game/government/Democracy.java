@@ -14,11 +14,17 @@
     private boolean containsMem;
     private String curName;
     private Character leader;
+    private String govName;
   
-	public Democracy(){
+	public Democracy(String Name){
+		  govName=Name;
 	      leader = new Character(" ",null);
 	      council = new Character[5]; //IS THIS ALL I NEED TO DO? CHECK TIM
 	    }
+	
+	public String getName(){
+		return govName;
+	}
 	    
 	    public void startElection() { //starts an election
 	      votes = new String[100];
@@ -50,6 +56,7 @@
 	    
 	    public String getResults(){//returns a string with the name of the winner of the election
 	      for(int j=0; j < candits.length; j++){
+	    	  votesForCan[j]=0;
 	        for(int k=0; k<votes.length; k++){
 	          if(votes[k].toLowerCase().equals(candits[j])){
 	            votesForCan[j] = votesForCan[j] + 1;
@@ -94,6 +101,9 @@
 	      return leader;
 	    }
 	  
+	    public Character[] getCouncil(){
+	    	return council;
+	    }
 	    
 	    //What to do here? Make leader choose council, and have character accept or decline invite
 	    public void addCouncilMem(Character chara) {

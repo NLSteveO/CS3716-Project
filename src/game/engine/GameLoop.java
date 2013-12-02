@@ -1,4 +1,4 @@
-package org.game.engine;
+package game.engine;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -1,6 +1,8 @@
 package game.character;
 
 // Imports
+import game.GameLauncher;
+
 import javax.swing.*;
 import javax.swing.event.*;
 
@@ -9,6 +11,8 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 /**
  * A class to construct the GUI for creating a new character
@@ -65,10 +69,6 @@ public class NewCharacter extends JFrame{
     	// A action listener for the finish button
     	class FinishListener implements ActionListener{
     		public void actionPerformed(ActionEvent evt){
-    			/**System.out.println("test");
-    			Happiness hap = new Happiness(pwrSlider.getValue(), welSlider.getValue(), solSlider.getValue());
-    			@SuppressWarnings("unused")
-				Character c = new Character(name.getText(), hap);*/
     			int p = pwrSlider.getValue() + welSlider.getValue() + solSlider.getValue();
     			if (p <= 100){
     				String[] c = new String[4];
@@ -145,18 +145,24 @@ public class NewCharacter extends JFrame{
     }
 	
 	public void save(String[] s){
-		File file = new File("./Characters/" + s[0] + ".txt");
+		String newPath = "";
+    	try {
+			newPath = URLDecoder.decode(GameLauncher.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "./Characters/", "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+    	File f = new File(newPath + s[0] + ".txt");
+    	f.getParentFile().mkdirs();
 		if (load)
-			file.delete();
+			f.delete();
 	     PrintWriter newChar;
 		try {
-			newChar = new PrintWriter(file);
+			newChar = new PrintWriter(f);
 			for (int i = 0; i < 4; i++){
 		    	 newChar.println(s[i]);
 		     }
 			  newChar.close();
 		} catch (FileNotFoundException e) {
-			
 			e.printStackTrace();
 		}
 	     

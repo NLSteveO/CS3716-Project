@@ -1,0 +1,1 @@
+This is where character profiles are saved to and loaded from.

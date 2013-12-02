@@ -1,13 +1,8 @@
-package org.game.engine;
+package game.engine;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
-
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -27,6 +22,7 @@ public class GameApplication {
 				msg.setMinimumSize(new Dimension(game.getWidth()+12, 50));
 				msg.setPreferredSize(new Dimension(game.getWidth()+12, 50));
 				frame.setSize(game.getWidth()+12, game.getHeight()+80);
+				frame.setResizable(false);
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				GameCanvas canvas = new GameCanvas();
 				MessageCenter mc = new MessageCenter();

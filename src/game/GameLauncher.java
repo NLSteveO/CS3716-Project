@@ -1,9 +1,9 @@
+package game;
+
 import game.character.*;
 import game.character.Character;
-import game.map.*;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,7 +11,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -20,10 +19,10 @@ import javax.swing.SwingUtilities;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
-//import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Scanner;
 
 @SuppressWarnings("serial")
@@ -33,11 +32,9 @@ public class GameLauncher extends JFrame{
 	private BackgroundPanel bg;
 	private Dimension size;
 	private JFrame frame;
-	private JPanel main;
 	private JMenuBar menu;
-	private JMenu file, editMenu, character, help;
-	private JMenuItem nGame, save, load, exit, edit, nChar, sChar, eChar, rules, about;
-	private Map map;
+	private JMenu file, /**editMenu,*/ character, help;
+	private JMenuItem nGame, save, load, exit, /**edit,*/ nChar, sChar, eChar, rules, about;
 	private Character[] charName;
 	private int numChar = 0;
 	
@@ -51,13 +48,13 @@ public class GameLauncher extends JFrame{
         
         charName = new Character[100];
     	
-        bg = new BackgroundPanel("./Images/flag.jpg", size);
-    	add(bg);
-    	add(new JPanel());
+		bg = new BackgroundPanel("src/Images/flag.jpg", size);
+		add(bg);
+		add(new JPanel());
         
     	menu = new JMenuBar();
     	menu.add(createFileMenu());
-    	menu.add(createEditMenu());
+    	//menu.add(createEditMenu());
     	menu.add(createCharMenu());
     	menu.add(createHelpMenu());
     	setJMenuBar(menu);
@@ -77,14 +74,13 @@ public class GameLauncher extends JFrame{
     public JMenuItem createNewGame(){
     	nGame = new JMenuItem("New Game");
     	class MenuItemListener implements ActionListener{
-            public void actionPerformed(ActionEvent event){
-            	if (charName == null){
+			public void actionPerformed(ActionEvent event){
+            	if (charName[0] == null){
             	    createFrame("Error", new Dimension(410, 100));
             		frame.add(new JLabel("You must first create or select a character before starting a new game."));
             	}
             	else {
-            		Play p = new Play(charName);
-            		Play.main(null);
+            		Play.main(charName);
             	}
             }
         }
@@ -94,59 +90,11 @@ public class GameLauncher extends JFrame{
     	return nGame;
     }
     
-    public void newGame(){
-    	createFrame("New Game", new Dimension(300, 300));
-		main = new JPanel();
-		main.setLayout(new GridLayout(3,2));
-		
-		JLabel size = new JLabel("Size of map.");
-		final JTextField sizeField = new JTextField();
-		main.add(size);
-		main.add(sizeField);
-		
-		JLabel terr = new JLabel("Number of territories.");
-		final JTextField terrField = new JTextField();
-		main.add(terr);
-		main.add(terrField);
-		
-		JButton ok = new JButton("OK");
-		JButton cancel = new JButton("Cancel");
-		main.add(ok);
-		main.add(cancel);
-		frame.add(main);
-		
-		class OkButtonListener implements ActionListener{
-            public void actionPerformed(ActionEvent event){
-            	//createMap(Integer.parseInt(terrField.getText()), Integer.parseInt(sizeField.getText()));
-            }
-         }
-         ActionListener okListener = new OkButtonListener();
-         ok.addActionListener(okListener);
-		
-		class ButtonListener implements ActionListener{
-            public void actionPerformed(ActionEvent event){
-               frame.dispose();
-            }
-         }
-         ActionListener listener = new ButtonListener();
-         cancel.addActionListener(listener);
-    }
-    
-   /** public void createMap(int t, int s){
-    	MapPanel map = new MapPanel(new Dimension(500, 500), t, s);
-    	this.map = map.getMap();
-    	frame.setTitle("Map");
-    	frame.setSize(new Dimension((s*50)+6, (s*50)+28));
-    	frame.remove(main);
-    	frame.add(map);
-    	frame.repaint();
-    }*/
-    
     public JMenuItem createSaveItem(){
     	save = new JMenuItem("Save");
     	class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-   				//    JFileChooser fc = new JFileChooser("./Saves/");
+   				//    JFileChooser fc = new JFileChooser("src/resources/Saves/");
                // int returnVal = fc.showSaveDialog(GameLauncher.this);
                    /** if (returnVal == JFileChooser.APPROVE_OPTION) {
                     	File file = fc.getSelectedFile();
@@ -186,7 +134,6 @@ public class GameLauncher extends JFrame{
 		     }
 			  newChar.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	     
@@ -196,7 +143,7 @@ public class GameLauncher extends JFrame{
     	load = new JMenuItem("Load");
         class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-             //   JFileChooser fc = new JFileChooser("./Saves/");
+             //   JFileChooser fc = new JFileChooser("src/resources/Saves/");
             	/**if (charName == null){
             	    createFrame("Error", new Dimension(410, 100));
             		frame.add(new JLabel("You must first create or select a character before loading a game."));
@@ -250,7 +197,7 @@ public class GameLauncher extends JFrame{
     	return exit;
     }
     
-    public JMenu createEditMenu(){
+    /**public JMenu createEditMenu(){
     	editMenu = new JMenu("Country");
     	editMenu.add(createEditItem());
     	return editMenu;
@@ -259,7 +206,7 @@ public class GameLauncher extends JFrame{
     public JMenuItem createEditItem(){
     	edit = new JMenuItem("Settle Country");
     	return edit;
-    }
+    }*/
     
     public JMenu createCharMenu(){
     	character = new JMenu("Character");
@@ -287,13 +234,24 @@ public class GameLauncher extends JFrame{
     	sChar = new JMenuItem("Add Character");
         class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-					JFileChooser fc = new JFileChooser("./Characters/");
+            		String path = GameLauncher.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            		String newPath = "";
+            		try {
+						newPath = URLDecoder.decode(path, "UTF-8");
+					} catch (UnsupportedEncodingException e1) {
+						e1.printStackTrace();
+					}
+            		File f = new File(newPath + "./Characters/");
+            		f.mkdirs();
+					JFileChooser fc = new JFileChooser(f);
+					fc.setMultiSelectionEnabled(true);
 					int returnVal = fc.showOpenDialog(GameLauncher.this);
 					if (returnVal == JFileChooser.APPROVE_OPTION){
-						File file = fc.getSelectedFile();
+						File[] file = fc.getSelectedFiles();
 						Scanner in;
+						for (int i = 0; i < file.length; i++){
 						try {
-							in = new Scanner(file);
+							in = new Scanner(file[i]);
 							String name = in.nextLine();
 							int pow = Integer.parseInt(in.nextLine());
 							int wel = Integer.parseInt(in.nextLine());
@@ -304,7 +262,7 @@ public class GameLauncher extends JFrame{
 							numChar++;
 						} catch (FileNotFoundException e) {
 							e.printStackTrace();
-						}					}
+						}					}}
             }
          }
          ActionListener listener = new MenuItemListener();
@@ -316,7 +274,16 @@ public class GameLauncher extends JFrame{
     	eChar = new JMenuItem("Edit Character");
         class MenuItemListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-            	JFileChooser fc = new JFileChooser("./Characters/");
+            	String path = GameLauncher.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            	String newPath = "";
+            	try {
+					newPath = URLDecoder.decode(path, "UTF-8");
+				} catch (UnsupportedEncodingException e1) {
+					e1.printStackTrace();
+				}
+            	File f = new File(newPath + "./Characters/");
+            	f.mkdirs();
+            	JFileChooser fc = new JFileChooser(f);
 				int returnVal = fc.showOpenDialog(GameLauncher.this);
 				if (returnVal == JFileChooser.APPROVE_OPTION){
 					File file = fc.getSelectedFile();

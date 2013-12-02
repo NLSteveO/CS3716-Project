@@ -1,22 +1,26 @@
-package org.game.engine;
+package game.engine;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
+@SuppressWarnings("serial")
 public class MessageCenter extends JPanel{
 
-	private JTextArea messages;
+	private String messages;
 	
 	public MessageCenter(){
-		messages = new JTextArea();
-		add(messages);
+		messages = "Messages will be displayed here.";
 	}
 	
 	public void sendMsg(String msg){
-		messages.setText(msg);
+		messages = msg;
+	}
+	
+	public void paintComponent(Graphics g){
+		Graphics2D g2 = (Graphics2D) g;
+		g2.drawString(messages, 0, 0);
 	}
 
 }

@@ -75,7 +75,7 @@ public class Play extends Game {
 		for(Character c : characters){
 			for(Territory t: neighbours){
 				if(c.getLocation().equals(t) && c.getSettle()){
-					CountryFrame(c.getLocation())
+					CountryFrame(c.getLocation());
 				}
 			}
 		}

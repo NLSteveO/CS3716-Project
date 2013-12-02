@@ -58,7 +58,7 @@ public class Play extends Game {
 		}
 		for (Character x : characters){
 			if (x != null) numChar++;
-		}System.out.println(numChar);
+		}
 		System.out.println("Player " + turn.getName() + "'s turn..");
 	}
 	
@@ -66,7 +66,6 @@ public class Play extends Game {
 		turnNum++;
 		if (turnNum >= numChar) turnNum = 0;
 		turn = characters[turnNum];
-		System.out.println(numChar);
 		System.out.println("Player " + turn.getName() + "'s turn.");
 	}
 	
@@ -117,7 +116,7 @@ public class Play extends Game {
 		g.drawImage(map, 0, 0, null);
 		for(int i = 0; i < numChar; i++){
 			if (characters[i].getPlaced()){
-				g.drawImage(man[i].getSubimage((c)*24, (curDir-37)*29, 25, 28),  characters[i].getCoord().getX()-13,  characters[i].getCoord().getY()-14,  null);
+				g.drawImage(man[i%4].getSubimage((c)*24, (curDir-37)*29, 25, 28),  characters[i].getCoord().getX()-13,  characters[i].getCoord().getY()-14,  null);
 			}
 		}
 	}

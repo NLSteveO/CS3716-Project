@@ -7,15 +7,10 @@ public class Country{
     
 	private Government gov;
 	private Territory ter;
-	private Country c;
     
     public Country(Territory t){
         ter = t;
     }
-
-    /**public void createCountry(Territory t){
-		c = new Country(t);
-    }*/
 
     public void setGovernment(Government g){
     	gov = g;
@@ -27,9 +22,5 @@ public class Country{
     
     public Territory getTerr(){
     	return ter;
-    }
-    
-    public Country getCountry(){
-    	return c;
     }
 }

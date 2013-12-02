@@ -7,6 +7,7 @@ public class Territory {
     private String Name;
     private ArrayList<Territory> neighbours;
     private Area arr;
+    private boolean occupied = false;
     
     public Territory(String Name,Area n){
             neighbours = new ArrayList<Territory>();
@@ -44,6 +45,14 @@ public class Territory {
     public void addNeighbour(Territory t){
                             neighbours.add(t);
   
+    }
+    
+    public void setOccupied(){
+    	occupied = true;
+    }
+    
+    public boolean isOccupied(){
+    	return occupied;
     }
     
    }

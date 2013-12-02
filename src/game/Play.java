@@ -99,15 +99,19 @@ public class Play extends Game {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_S){
-			System.out.println("Settle Country");
+		if (e.getKeyCode() == KeyEvent.VK_S && !characters[turnNum].getLocation().isOccupied()){
+			System.out.println(characters[turnNum].getName() + " Settled a Country");
+			characters[turnNum].getLocation().setOccupied();
 			Country c = new Country(characters[turnNum].getLocation());
 		}
-		else if (e.getKeyCode() == KeyEvent.VK_G){
+		else if (e.getKeyCode() == KeyEvent.VK_G && characters[turnNum].getLocation().isOccupied()){
 			System.out.println("Establish Government");
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_E){
 			System.out.println("Start Election");
+		}
+		else if (e.getKeyCode() == KeyEvent.VK_F){
+			System.out.println(characters[turnNum].getLocation().getName());
 		}
 	}
 	

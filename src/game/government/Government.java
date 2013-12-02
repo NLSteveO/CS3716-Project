@@ -11,5 +11,7 @@
       public void setLeader(Character ch);
   
       public void addCouncilMem(Character chara); 
+      
+      public String getType();
   
   }

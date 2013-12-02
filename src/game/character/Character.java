@@ -17,8 +17,8 @@ public class Character{
     public Character(String aName, Happiness h){
         civilian = true;//status civilian by default
         president = false;
-                dictator = false;
-                councilMem = false;
+        dictator = false;
+        councilMem = false;
         name = aName;
         happy = h;
         placed = false;

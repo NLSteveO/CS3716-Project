@@ -164,6 +164,7 @@ public class Play extends Game{
 	public void settleCountry(String t){
 		characters[turnNum].getLocation().setOccupied();
 		Country c = new Country(characters[turnNum].getLocation(), characters[turnNum], t);
+		characters[turnNum].getLocation().setCountry(c);
 		updateMSG(turn.getName() + " has settled " + c.getName() + " in " + c.getTerr().getName());
 	}
 

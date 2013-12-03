@@ -1,4 +1,6 @@
 package game.map;
+import game.country.Country;
+
 import java.util.ArrayList;
 
 public class Territory {
@@ -8,6 +10,7 @@ public class Territory {
     private ArrayList<Territory> neighbours;
     private Area arr;
     private boolean occupied = false;
+    private Country count;
     
     public Territory(String Name,Area n){
             neighbours = new ArrayList<Territory>();
@@ -17,6 +20,14 @@ public class Territory {
     
     public ArrayList<Territory> getNeighbours(){
         return neighbours;
+    }
+    
+    public void setCountry(Country c){
+    	count=c;
+    }
+    
+    public Country getCountry(){
+    	return count;
     }
     
     public int numNeighbours(){

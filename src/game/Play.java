@@ -3,8 +3,9 @@ import game.map.Map;
 import game.map.Territory;
 
 import java.util.ArrayList;
-
+import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -16,6 +17,12 @@ import game.engine.Game;
 import game.engine.GameApplication;
 
 import javax.imageio.ImageIO;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 public class Play extends Game {
 	
@@ -24,24 +31,22 @@ public class Play extends Game {
 		GameApplication.start(p);
 	}
 	
-	BufferedImage[] man = new BufferedImage[4];
-	BufferedImage map;
-	int frame, c;
-	int reqDir, curDir;
-	int columns, rows;
-	Map m = new Map();
-	static Character[] character;
-	Character[] characters;
-	int turnNum, numChar;
-	Character turn;
+	private BufferedImage[] man = new BufferedImage[4];
+	private BufferedImage map;
+	private int frame, c;
+	private int curDir;
+	private Map m = new Map();
+	private Character[] characters;
+	private int turnNum, numChar;
+	private Character turn;
+	private JFrame popFrame;
 		
 	public Play(Character[] ch) {
-		character = ch;
 		characters = ch;
 		title = "Play";
 		frame = 0;
 		c = 0;
-		curDir = reqDir = KeyEvent.VK_RIGHT;
+		curDir = KeyEvent.VK_RIGHT;
 		width = 800;
 		height = 608;
 		turnNum = 0;
@@ -73,7 +78,7 @@ public class Play extends Game {
 		for(Character c : characters){
 			for(Territory t: neighbours){
 				if(c.getLocation().equals(t) && c.getSettle()){
-					CountryFrame(c.getLocation());
+					countryFrame(c.getLocation());
 				}
 			}
 		}
@@ -118,6 +123,7 @@ public class Play extends Game {
 			characters[turnNum].getLocation().setOccupied();
 			Country c = new Country(characters[turnNum].getLocation(), "UnterLand");
 			System.out.println(c.getTerr().getName()+"\n"+ c.getName()); //just so its not unused
+			nextTurn();
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_G && characters[turnNum].getLocation().isOccupied()){
 			System.out.println("Establish Government");
@@ -143,6 +149,28 @@ public class Play extends Game {
 			frame = 0;
 		}
 	}
+	
+	public void countryFrame(Territory t, Character c){
+		createFrame("Settling Country.", new Dimension(200, 200));
+		JPanel main = new JPanel(new GridLayout(3,1));
+		JLabel text = new JLabel(c.getName() + " would like to settle a country in " + t.getName() + ". Do you oppose?");
+		main.add(text);
+		JPanel buttons = new JPanel();
+		JButton yes = new JButton("Yes");
+		JButton no = new JButton("No");
+		buttons.add(yes);
+		buttons.add(no);
+		popFrame.add(main);
+	}
+	
+	public void createFrame(String title, Dimension size){
+    	popFrame = new JFrame(title);
+    	popFrame.setSize(size);
+    	popFrame.setLocationRelativeTo(null);
+    	popFrame.setResizable(false);
+    	popFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    	popFrame.setVisible(true);
+    }
 
 	@Override
 	public void draw(Graphics2D g) {

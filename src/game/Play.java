@@ -103,6 +103,7 @@ public class Play extends Game{
 				numFrame++;
 				createCountry();
 			}
+			else denyCountry();
 		}
 		
 		ArrayList<Territory> neighbours = new ArrayList<Territory>();
@@ -178,11 +179,7 @@ public class Play extends Game{
 				updateMSG(characters[turnNum].getName()+" is creating a government for "+characters[turnNum].getLocation().getCountry().getName());
 				numFrame++;
 				createGovernment();
-				if( characters[turnNum].getLocation().getCountry().getGovType()==0)
-					updateMSG("New government is "+ characters[turnNum].getLocation().getCountry().getDemocracy().getName());
-				if( characters[turnNum].getLocation().getCountry().getGovType()==1)
-					updateMSG("New government is "+ characters[turnNum].getLocation().getCountry().getDictatorship().getName());
-			}
+				}
 			
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_E){
@@ -213,6 +210,7 @@ public class Play extends Game{
 		JPanel main = new JPanel(new GridLayout(3,1));
 		JTextArea text = new JTextArea("Congratulations you have just settled a country.\n Now give it a name.");
 		text.setLineWrap(true);
+		text.setEditable(false);
 		main.add(text);
 		JPanel namePan = new JPanel();
 		namePan.add(new JLabel("Enter Name:"));
@@ -227,12 +225,27 @@ public class Play extends Game{
 		popFrame.get(numFrame).add(main);
 	}
 	
+	public void denyCountry(){
+		createFrame("Country Denied", new Dimension (400,200));
+		popFrame.get(numFrame).setDefaultCloseOperation(0);
+		JPanel main = new JPanel(new GridLayout(3,1));
+		JTextArea text = new JTextArea("Sorry you're not allowed to start a country here, so sayeth the masses");
+		text.setLineWrap(true);
+		text.setEditable(false);
+		main.add(text);
+		JButton cont = new JButton("continue");
+		cont.setActionCommand("continue");
+		cont.addActionListener(new CountryButtonListener());
+		main.add(cont);
+		popFrame.get(numFrame).add(main);
+	}
 	public void createGovernment(){
 		createFrame("Choose Government Type.", new Dimension(400, 300));
 		popFrame.get(numFrame).setDefaultCloseOperation(0);
 		JPanel main = new JPanel(new GridLayout(3,1));
 		JTextArea text = new JTextArea("You are establishing a Government.\n Now what will you be called.");
 		text.setLineWrap(true);
+		text.setEditable(false);
 		main.add(text);
 		JPanel namePan = new JPanel();
 		namePan.add(new JLabel("Enter Name:"));
@@ -258,7 +271,7 @@ public class Play extends Game{
 		public void actionPerformed(ActionEvent e){
 			JComboBox breaker = (JComboBox)e.getSource();
 			String govType = (String)breaker.getSelectedItem();
-			if(govType.toLowerCase().equals("Democracy")){
+			if(govType.toLowerCase().equals("democracy")){
 				curGovType="democracy";
 			}
 			else 
@@ -273,6 +286,7 @@ public class Play extends Game{
 		JPanel main = new JPanel(new GridLayout(2,1));
 		JTextArea text = new JTextArea(c.getName() + " would like to settle a country in " + t.getName() + ".\n Do you oppose?");
 		text.setLineWrap(true);
+		text.setEditable(false);
 		main.add(text);
 		JPanel buttons = new JPanel();
 		JButton yes = new JButton("Yes");
@@ -288,15 +302,18 @@ public class Play extends Game{
 	}
 	
 	
-	// DO IT SON
-	class GovernmentButtonListener implements ActionListener{
+		class GovernmentButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			if("ok".equals(e.getActionCommand())){
-				System.out.println(governmentName.getText());
+				System.out.println(governmentName.getText() +"\n" + curGovType);
 				turn.getLocation().getCountry().setGovernment(curGovType,governmentName.getText());
 				popFrame.get(numFrame).dispose();
 				popFrame.remove(numFrame);
 				numFrame--;
+				if( characters[turnNum].getLocation().getCountry().getGovType()==0)
+					updateMSG("New Democracy is "+ characters[turnNum].getLocation().getCountry().getDemocracy().getName());
+				if( characters[turnNum].getLocation().getCountry().getGovType()==1)
+					updateMSG("New Dictatorship is "+ characters[turnNum].getLocation().getCountry().getDictatorship().getName());
 				nextTurn();
 			}
 		}
@@ -318,6 +335,11 @@ public class Play extends Game{
 			}
 			else if ("ok".equals(e.getActionCommand())){
 				settleCountry(countryName.getText());
+				popFrame.get(numFrame).dispose();
+				popFrame.remove(numFrame);
+				numFrame--;
+			}
+			else if("continue".equals(e.getActionCommand())){
 				popFrame.get(numFrame).dispose();
 				popFrame.remove(numFrame);
 				numFrame--;

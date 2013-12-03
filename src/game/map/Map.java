@@ -47,7 +47,7 @@ public class Map{
 	private void  createMap(){
             double[] x,y;
             terr.add(new Territory("Northrend",
-                            new Area(4,x=new double[]{82,82,192,192},y=new double[]{28,140,28,140})));
+                            new Area(4,x=new double[]{82,82,192,192},y=new double[]{28,140,140,28})));
             terr.add(new Territory("Windhelm",
                             new Area(6,x=new double[]{195,195,250,250,306,306},y=new double[]{96,140,140,221,221,96})));
             neighbours(terr.get(0),terr.get(1));

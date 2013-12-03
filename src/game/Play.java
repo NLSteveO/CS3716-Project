@@ -204,6 +204,7 @@ public class Play extends Game{
 		JPanel namePan = new JPanel();
 		namePan.add(new JLabel("Enter Name:"));
 		countryName = new JTextField();
+		countryName.setColumns(15);
 		namePan.add(countryName);
 		main.add(namePan);
 		JButton ok = new JButton("Ok");
@@ -238,16 +239,19 @@ public class Play extends Game{
 			if ("yes".equals(e.getActionCommand())){
 				settler.voteNotAllowed();
 				popFrame.get(numFrame).dispose();
+				popFrame.remove(numFrame);
 				numFrame--;
 			}
 			else if ("no".equals(e.getActionCommand())){
 				settler.voteAllowed();
 				popFrame.get(numFrame).dispose();
+				popFrame.remove(numFrame);
 				numFrame--;
 			}
 			else if ("ok".equals(e.getActionCommand())){
 				settleCountry(countryName.getText());
 				popFrame.get(numFrame).dispose();
+				popFrame.remove(numFrame);
 				numFrame--;
 			}
 		}

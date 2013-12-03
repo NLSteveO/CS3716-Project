@@ -7,7 +7,7 @@
   public class Democracy implements Government{//may not even need election interface now
     
     private String[] votes;
-    private String[] candits;
+    private Character[] candits;
     private int[] votesForCan;
     private int i,highest,indexOfHigh,taxRatePer;
     private Character[] council;
@@ -28,7 +28,7 @@
 	    
 	    public void startElection() { //starts an election
 	      votes = new String[100];
-	      candits = new String[5];
+	      candits = new Character[5];
 	      votesForCan = new int[5];
 	    }
 	    
@@ -43,7 +43,7 @@
 	      }
 	    }
 	    
-	    public void addCandidate(String can){//adds candidate to election (5 max)
+	    public void addCandidate(Character can){//adds candidate to election (5 max)
 	      i=0;
 	      while(i<candits.length){
 	        if(candits[i] == null){
@@ -54,7 +54,7 @@
 	      }
 	    }
 	    
-	    public String getResults(){//returns a string with the name of the winner of the election
+	    public Character getResults(){//returns a string with the name of the winner of the election
 	      for(int j=0; j < candits.length; j++){
 	    	  votesForCan[j]=0;
 	        for(int k=0; k<votes.length; k++){

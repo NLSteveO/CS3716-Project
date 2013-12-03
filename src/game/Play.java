@@ -100,12 +100,6 @@ public class Play extends Game{
 				// DISPLAY A FRAME WHICH ALLOWS THE PLAYER TO CREATE HIS COUNTRY
 				numFrame++;
 				createCountry();
-				for(int i =0; i<numChar;i++){
-					if(!characters[i].getSettle())
-						isAnyoneSettling=false;
-					else
-						isAnyoneSettling=true;
-				}
 			}
 		}
 		

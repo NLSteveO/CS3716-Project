@@ -13,7 +13,7 @@ public class Territory {
             neighbours = new ArrayList<Territory>();
             this.Name=Name;
             arr = n;
-    }  
+    }
     
     public ArrayList<Territory> getNeighbours(){
         return neighbours;

@@ -15,6 +15,7 @@ public class Character{
         private Coord coord;
         private boolean settle=false;
         private int[] settleVotes={0,0};
+		private int time;
     
     public Character(String aName, Happiness h){
         civilian = true;//status civilian by default
@@ -46,8 +47,20 @@ public class Character{
     }
     public void voteNotAllowed(){
     	settleVotes[1]++;
+    	time--;
     }
     
+    public void startTime(){
+    	time = 10;
+    }
+    
+    public void endTime(){
+    	time = 0;
+    }
+    
+    public boolean timeUp(){
+    	return time<=0;
+    }
     
     public void setCoord(int x, int y){
     	coord.setX(x);

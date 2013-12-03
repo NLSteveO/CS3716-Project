@@ -2,21 +2,17 @@ package game.country;
 
 import game.government.Democracy;
 import game.government.Dictatorship;
-import game.government.Government;
 import game.map.Territory;
 import game.character.Character;
 
 public class Country{
     
-	//private Government gov;
-	private Democracy dem;
-	private Dictatorship dic;
 	private String name;
-	private Government gov;
 	private Territory ter;
-	private Country c;
 	private Character god;
 	private boolean demdem, dicdic;
+	private Democracy dem;
+	private Dictatorship dic;
     
     public Country(Territory t,Character creator, String n){
         ter = t;

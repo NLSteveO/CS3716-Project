@@ -9,9 +9,11 @@
     private int i,taxRatePer;
     private String curName;
     private Character leader;
+    private String govName;
     
-    public Dictatorship(Character chr){
+    public Dictatorship(Character chr, String Name){
       setLeader(chr);
+      govName = Name;
       council = new Character[5]; ///IS THIS ALL I NEED TO DO? CHECK TIM!
     }
   
@@ -42,6 +44,10 @@
     public Character getLeader(){
       return leader;
     }
+    
+    public Character[] getCouncil(){
+    	return council;
+    }
   
     public void addCouncilMem(Character chara) {
       i=0;
@@ -53,6 +59,7 @@
         i = i+1;
       }
     }
+    public String getName(){return govName;}
     
     public boolean isCouncilMem(Character cc){
       for(int i=0;i<council.length;i++){

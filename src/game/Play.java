@@ -2,6 +2,8 @@ package game;
 import game.map.Map;
 import game.map.Territory;
 
+import java.util.ArrayList;
+
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -12,7 +14,6 @@ import game.character.Character;
 import game.country.Country;
 import game.engine.Game;
 import game.engine.GameApplication;
-import game.engine.MessageCenter;
 
 import javax.imageio.ImageIO;
 
@@ -31,9 +32,9 @@ public class Play extends Game {
 	Map m = new Map();
 	static Character[] character;
 	Character[] characters;
-	MessageCenter mc = new MessageCenter();
 	int turnNum, numChar;
 	Character turn;
+	boolean isAnyoneSettling =false;
 		
 	public Play(Character[] ch) {
 		character = ch;
@@ -67,6 +68,31 @@ public class Play extends Game {
 		turn = characters[turnNum];
 		System.out.println("Player " + turn.getName() + "'s turn.");
 		updateMSG("Player " + turn.getName() + "'s turn.");
+		
+		if(turn.getSettle()){
+			if(turn.isAllowed()){
+				
+				// DISPLAY A FRAME WHICH ALLOWS THE PLAYER TO CREATE HIS COUNTRY
+				//createCountryFrame();
+				//settleCountry();
+			}
+		}
+		
+		ArrayList<Territory> neighbours = turn.getLocation().getNeighbours();
+		neighbours.add(turn.getLocation());
+		if(!isAnyoneSettling){
+			for(Character c : characters){
+				for(Territory t: neighbours){
+					if(c.getLocation().equals(t) && c.getSettle()){
+						//DISPLAY THE FRAME WHICH ALLOWS NEIGHBOURS TO ALLOW OR DENY COUNTRIES 
+						// NEAR THEM
+						countryFrame(t,c);
+				}
+			}
+		}
+	}
+		
+		
 	}
 	
 	public void updateMSG(String t){
@@ -94,13 +120,20 @@ public class Play extends Game {
 		}
 	}
 
+	
+	public void settleCountry(String t){
+		characters[turnNum].getLocation().setOccupied();
+		Country c = new Country(characters[turnNum].getLocation(), characters[turnNum], t);
+		System.out.println(c.getTerr().getName()+"\n"+ c.getName()); //just so its not unused
+	}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_S && !characters[turnNum].getLocation().isOccupied()){
-			System.out.println(characters[turnNum].getName() + " Settled a Country");
-			characters[turnNum].getLocation().setOccupied();
-			Country c = new Country(characters[turnNum].getLocation());
-			c.getTerr(); //just so its not unused
+			System.out.println(characters[turnNum].getName() + "is attempting to settle a Country");
+			isAnyoneSettling=true;
+			turn.changeSettle(true);
+			nextTurn();
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_G && characters[turnNum].getLocation().isOccupied()){
 			System.out.println("Establish Government");

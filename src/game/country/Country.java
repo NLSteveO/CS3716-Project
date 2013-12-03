@@ -11,23 +11,29 @@ public class Country{
 	//private Government gov;
 	private Democracy dem;
 	private Dictatorship dic;
+	private String name;
+	private Government gov;
 	private Territory ter;
 	private Country c;
 	private Character god;
 	private boolean demdem, dicdic;
     
-    public Country(Territory t,Character creator){
+    public Country(Territory t,Character creator, String n){
         ter = t;
         god = creator;
+        name=n;
     }
+    
+    public String getName(){return name;}
+    public void setName(String n){name=n;}
 
-    public void setGovernment(String g){
+    public void setGovernment(String g, String gn){
     	 if(g.toLowerCase().equals("democracy")){
-    		 dem = new Democracy();
+    		 dem = new Democracy(gn);
     		 demdem = true;
     	 }
     	 else{
-    		 dic = new Dictatorship(god);
+    		 dic = new Dictatorship(god,gn);
     		 dicdic = true;
     	 }
     }

@@ -21,6 +21,7 @@ import game.engine.GameApplication;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -45,7 +46,8 @@ public class Play extends Game{
 	private List<JFrame> popFrame;
 	private boolean isAnyoneSettling = false;
 	private int numFrame=-1;
-	private JTextField countryName;
+	private JTextField countryName,governmentName;
+	private String curGovType;
 
 	public Play(Character[] ch) {
 		popFrame = new ArrayList<JFrame>();
@@ -172,6 +174,16 @@ public class Play extends Game{
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_G && characters[turnNum].getLocation().isOccupied()){
 			System.out.println("Establish Government");
+			if(characters[turnNum].getLocation().isOccupied() && characters[turnNum].getLocation().getCountry().getGovType()==-1){
+				updateMSG(characters[turnNum].getName()+" is creating a government for "+characters[turnNum].getLocation().getCountry().getName());
+				numFrame++;
+				createGovernment();
+				if( characters[turnNum].getLocation().getCountry().getGovType()==0)
+					updateMSG("New government is "+ characters[turnNum].getLocation().getCountry().getDemocracy().getName());
+				if( characters[turnNum].getLocation().getCountry().getGovType()==1)
+					updateMSG("New government is "+ characters[turnNum].getLocation().getCountry().getDictatorship().getName());
+			}
+			
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_E){
 			System.out.println("Start Election");
@@ -210,10 +222,50 @@ public class Play extends Game{
 		main.add(namePan);
 		JButton ok = new JButton("Ok");
 		ok.setActionCommand("ok");
-		ok.addActionListener(new ButtonListener());
+		ok.addActionListener(new CountryButtonListener());
 		main.add(ok);
 		popFrame.get(numFrame).add(main);
 	}
+	
+	public void createGovernment(){
+		createFrame("Choose Government Type.", new Dimension(400, 300));
+		popFrame.get(numFrame).setDefaultCloseOperation(0);
+		JPanel main = new JPanel(new GridLayout(3,1));
+		JTextArea text = new JTextArea("You are establishing a Government.\n Now what will you be called.");
+		text.setLineWrap(true);
+		main.add(text);
+		JPanel namePan = new JPanel();
+		namePan.add(new JLabel("Enter Name:"));
+		governmentName = new JTextField();
+		governmentName.setColumns(15);
+		namePan.add(governmentName);
+		main.add(namePan);
+		JPanel choosePan = new JPanel();
+		String[] types = {"Democracy","Dictatorship"};
+		JComboBox govStuff = new JComboBox(types);
+		govStuff.setSelectedIndex(-1);
+		govStuff.addActionListener(new GovChoiceListener());
+		choosePan.add(govStuff);
+		main.add(choosePan);
+		JButton ok = new JButton("Ok");
+		ok.setActionCommand("ok");
+		ok.addActionListener(new GovernmentButtonListener());
+		main.add(ok);
+		popFrame.get(numFrame).add(main);
+	}
+	
+	class GovChoiceListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			JComboBox breaker = (JComboBox)e.getSource();
+			String govType = (String)breaker.getSelectedItem();
+			if(govType.toLowerCase().equals("Democracy")){
+				curGovType="democracy";
+			}
+			else 
+				curGovType="dictatorship";
+		}
+	}
+	
 	
 	public void countryFrame(Territory t, Character c){
 		createFrame("Settling Country.", new Dimension(200, 150));
@@ -225,17 +277,32 @@ public class Play extends Game{
 		JPanel buttons = new JPanel();
 		JButton yes = new JButton("Yes");
 		yes.setActionCommand("yes");
-		yes.addActionListener(new ButtonListener());
+		yes.addActionListener(new CountryButtonListener());
 		JButton no = new JButton("No");
 		no.setActionCommand("no");
-		no.addActionListener(new ButtonListener());
+		no.addActionListener(new CountryButtonListener());
 		buttons.add(no);
 		buttons.add(yes);
 		main.add(buttons);
 		popFrame.get(numFrame).add(main);
 	}
 	
-	class ButtonListener implements ActionListener{
+	
+	// DO IT SON
+	class GovernmentButtonListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			if("ok".equals(e.getActionCommand())){
+				System.out.println(governmentName.getText());
+				turn.getLocation().getCountry().setGovernment(curGovType,governmentName.getText());
+				popFrame.get(numFrame).dispose();
+				popFrame.remove(numFrame);
+				numFrame--;
+				nextTurn();
+			}
+		}
+	}
+	
+	class CountryButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			if ("yes".equals(e.getActionCommand())){
 				settler.voteNotAllowed();

@@ -10,7 +10,7 @@ public class Country{
 	private String name;
 	private Territory ter;
 	private Character god;
-	private boolean demdem, dicdic;
+	private boolean demdem=false, dicdic=false;
 	private Democracy dem;
 	private Dictatorship dic;
     
@@ -34,9 +34,18 @@ public class Country{
     	 }
     }
     
-    /**public Government getGov(){
-    	return gov;
-    }**/
+    public int getGovType(){
+    	if(demdem) return 0;
+    	if(dicdic) return 1;
+    	else return -1;
+    }
+    
+    public Dictatorship getDictatorship(){
+    	return dic;
+    }
+    public Democracy getDemocracy(){
+    	return dem;
+    }
     
     public Territory getTerr(){
     	return ter;

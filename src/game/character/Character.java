@@ -40,6 +40,7 @@ public class Character{
     public void changeSettle(boolean b){settle=b;}
     
     public boolean isAllowed(){
+    	if(settleVotes[0]==0 && settleVotes[1]==0) return true;
     	return(settleVotes[0]>settleVotes[1]);
     }
     public void voteAllowed(){

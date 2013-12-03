@@ -129,6 +129,9 @@
 	      return containsMem;
 	    }
 	    
+	    public String getType(){
+	    	return "Democracy";
+	    }
+	    
 	    //MORE TO COME HERE!
-	      
-	  }
+}

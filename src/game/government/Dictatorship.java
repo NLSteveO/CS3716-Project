@@ -72,6 +72,10 @@
       }
       return containsMem;
     }
+    
+    public String getType(){
+    	return "Dictatorship";
+    }
   
   }
   

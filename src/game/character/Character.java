@@ -13,13 +13,14 @@ public class Character{
         private boolean councilMem;
         private boolean placed;
         private Coord coord;
-        private boolean settle;
+        private boolean settle=false;
+        private int[] settleVotes={0,0};
     
     public Character(String aName, Happiness h){
         civilian = true;//status civilian by default
         president = false;
-                dictator = false;
-                councilMem = false;
+        dictator = false;
+        councilMem = false;
         name = aName;
         happy = h;
         placed = false;
@@ -35,7 +36,18 @@ public class Character{
     }
     
     public boolean getSettle(){return settle;}
-    public void changeSettle(){settle=!settle;}
+    public void changeSettle(boolean b){settle=b;}
+    
+    public boolean isAllowed(){
+    	return(settleVotes[0]>settleVotes[1]);
+    }
+    public void voteAllowed(){
+    	settleVotes[0]++;
+    }
+    public void voteNotAllowed(){
+    	settleVotes[1]++;
+    }
+    
     
     public void setCoord(int x, int y){
     	coord.setX(x);

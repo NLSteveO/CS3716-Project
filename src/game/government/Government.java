@@ -15,6 +15,8 @@
   
       public void addCouncilMem(Character chara); 
       
+      public String getType();
+
       public Character[] getCouncil();
   
   }

@@ -31,8 +31,8 @@
 	    
 	    public void setupElection(int i) { //starts an election
 	      votes = new String[100];
-	      candits = new Character[5];
-	      votesForCan = new int[5];
+	      candits = new Character[8];
+	      votesForCan = new int[8];
 	      start=true;
 	      ElectionStart =i;
 	    }
@@ -54,6 +54,7 @@
 	      while(i<votes.length){
 	        if(votes[i] == null){
 	          votes[i] = vote;
+	          System.out.println(votes[i]);
 	          i=votes.length;
 	        }
 	        i=i+1;
@@ -75,6 +76,11 @@
 	    }
 	    
 	    public Character[] getCandidates(){return candits;}
+	    
+	    public Character finishElection(){
+	    	Continue=false;
+	    	return getResults();
+	    }
 	    
 	    public Character getResults(){//returns a string with the name of the winner of the election
 	      for(int j=0; j < candits.length; j++){

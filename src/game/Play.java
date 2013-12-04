@@ -3,6 +3,7 @@ import game.map.Map;
 import game.map.Territory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -94,9 +95,24 @@ public class Play extends Game{
 		if(turn.getLocation()!=null &&turn.getLocation().getCountry()!=null){ 
 			if( turn.getLocation().getCountry().getGovType()==0 
 				&& turn.getLocation().getCountry().getDemocracy().isElectionContinue()
-					/*&& turnNum!=turn.getLocation().getCountry().getDemocracy().ElectionStart()*/){
+					&& turnNum!=turn.getLocation().getCountry().getDemocracy().ElectionStart()){
 				numFrame++;
 				voteForCandid();
+			}
+		}
+		
+		if(turn.getLocation()!=null &&turn.getLocation().getCountry()!=null){ 
+			if( turn.getLocation().getCountry().getGovType()==0 
+				&& turn.getLocation().getCountry().getDemocracy().isElectionContinue()
+					&& turnNum==turn.getLocation().getCountry().getDemocracy().ElectionStart()){
+				numFrame++;
+				voteForCandid();
+				Character win =turn.getLocation().getCountry().getDemocracy().finishElection();
+				updateMSG("And the new president of "+ turn.getLocation().getCountry().getDemocracy().getName()
+						+" is "+ win.getName() );
+				turn.getLocation().getCountry().getDemocracy().setLeader(win);
+				
+				
 			}
 		}
 		
@@ -140,8 +156,6 @@ public class Play extends Game{
 		
 		ArrayList<Territory> neighbours = new ArrayList<Territory>();
 		if (turn.getPlaced()){
-			//for(int i=neighbours.size()-1;i>-1;i++)
-			//	neighbours.remove(i);
 			neighbours = turn.getLocation().getNeighbours();
 			neighbours.add(turn.getLocation());
 			}
@@ -283,10 +297,14 @@ public class Play extends Game{
 		JPanel choosePan = new JPanel();
 		Character candidates[] =turn.getLocation().getCountry().getDemocracy().getCandidates();
 		String[] ballet= new String[candidates.length]; 
+		int numCan =0;
 		for(int i=0; i<candidates.length;i++){
-			if(ballet[i]!=null)
-			ballet[i]=candidates[i].getName();
+			if(candidates[i]!=null){
+				ballet[i]=candidates[i].getName();
+				numCan++;
+			}
 		}
+		ballet=Arrays.copyOf(ballet,numCan);
 		JComboBox voter = new JComboBox(ballet);
 		voter.setSelectedIndex(-1);
 		voter.addActionListener(new VoteListener());
@@ -443,6 +461,8 @@ public class Play extends Game{
 	
 	class NominationButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
+			System.out.println("!!!!!!!!!!!!!!"+nominee);
+			System.out.println(nominee.getName());
 			turn.getLocation().getCountry().getDemocracy().addCandidate(nominee);
 			popFrame.get(numFrame).dispose();
 			popFrame.remove(numFrame);

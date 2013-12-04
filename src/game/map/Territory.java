@@ -19,7 +19,10 @@ public class Territory {
     }
     
     public ArrayList<Territory> getNeighbours(){
-        return neighbours;
+    	ArrayList<Territory> pass = new ArrayList<Territory>();
+    	for(int i=0; i<neighbours.size();i++)
+    		pass.add(neighbours.get(i));
+        return pass;
     }
     
     public void setCountry(Country c){

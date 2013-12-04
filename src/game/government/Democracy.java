@@ -15,6 +15,7 @@
     private String curName;
     private Character leader;
     private String govName;
+    private boolean Election=false;
   
 	public Democracy(String Name){
 		  govName=Name;
@@ -26,11 +27,14 @@
 		return govName;
 	}
 	    
-	    public void startElection() { //starts an election
+	    public void setupElection() { //starts an election
 	      votes = new String[100];
 	      candits = new Character[5];
 	      votesForCan = new int[5];
+	      Election=true;
 	    }
+	    
+	    public boolean isElectionHappening(){return Election;}
 	    
 	    public void addVote(String vote){//adds a vote for specified candidate (100 max people to vote)
 	      i=0;
@@ -45,15 +49,22 @@
 	    
 	    public void addCandidate(Character can){//adds candidate to election (5 max)
 	      i=0;
+	      System.out.println("11111"+can.getName());
 	      while(i<candits.length){
+	    	 if(candits[i]!=null) {
+	    		 System.out.println("2222"+candits[i].getName()+ i);
+	    		 if(candits[i].equals(can)) break;
+	    	 }
 	        if(candits[i] == null){
 	          candits[i] = can;
+	          System.out.println("3333"+candits[i].getName()+i);
 	          i=candits.length;
 	        }
 	        i = i+1;
 	      }
 	    }
 	    
+	    public Character[] getCandidates(){return candits;}
 	    public Character getResults(){//returns a string with the name of the winner of the election
 	      for(int j=0; j < candits.length; j++){
 	    	  votesForCan[j]=0;

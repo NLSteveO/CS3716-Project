@@ -42,9 +42,9 @@ public class Play extends Game{
 	private Map m = new Map();
 	private Character[] characters;
 	private int turnNum, numChar;
-	private Character turn, settler;
+	private Character turn, settler,nominee;
 	private List<JFrame> popFrame;
-	private ArrayList<Character> candid = new ArrayList<Character>();
+	private ArrayList<Character> candid;
 	private boolean isAnyoneSettling = false;
 	private int numFrame=-1;
 	private JTextField countryName,governmentName;
@@ -91,6 +91,16 @@ public class Play extends Game{
 				isAnyoneSettling=false;
 		}
 		
+		
+		if(turn.getLocation().getCountry()!=null 
+				&& turn.getLocation().getCountry().getGovType()==0 
+					&& turn.getLocation().getCountry().getDemocracy().isElectionHappening()){
+			candid=new ArrayList<Character>();
+			numFrame++;
+			nominatePlayers();
+		}
+			
+		
 		/**if (turn.timeUp()){
 			turn.changeSettle(false);
 			System.out.println("time up");
@@ -109,19 +119,22 @@ public class Play extends Game{
 		
 		ArrayList<Territory> neighbours = new ArrayList<Territory>();
 		if (turn.getPlaced()){
+			//for(int i=neighbours.size()-1;i>-1;i++)
+			//	neighbours.remove(i);
 			neighbours = turn.getLocation().getNeighbours();
 			neighbours.add(turn.getLocation());
-		}
+			}
 		if(isAnyoneSettling){
-			for(int i = 0; i < numChar; i++){
-				for(Territory t: neighbours){
-					if(characters[i].getLocation().equals(t) && characters[i].getSettle() && !characters[i].equals(turn)){
+			for(int j=0; j<neighbours.size();j++){
+				for(int i = 0; i < numChar; i++){
+					if(characters[i].getLocation().equals(neighbours.get(j)) && characters[i].getSettle() && !characters[i].equals(turn)){
 						//DISPLAY THE FRAME WHICH ALLOWS NEIGHBOURS TO ALLOW OR DENY COUNTRIES 
 						// NEAR THEM
 						numFrame++;
 						settler = characters[i];
-						System.out.println(settler.getName());
-						countryFrame(t,characters[i]);
+						
+							countryFrame(neighbours.get(j),characters[i]);
+				
 						
 				}
 			}
@@ -185,7 +198,8 @@ public class Play extends Game{
 		else if (e.getKeyCode() == KeyEvent.VK_E){
 			if(turn.getLocation().getCountry().getGovType()==0){
 				updateMSG("Starting Election");
-				runElection();
+				startElection();
+				nextTurn();
 			}
 			
 			
@@ -196,12 +210,9 @@ public class Play extends Game{
 		}
 	}
 	
-	public void runElection(){
-		for(int i=0; i<numChar;i++){
-			if(characters[i].getLocation().equals(turn.getLocation())){
-				nominatePlayers();
-			}
-		}
+	public void startElection(){
+		turn.getLocation().getCountry().getDemocracy().setupElection();
+				
 	}
 		
 	
@@ -244,7 +255,7 @@ public class Play extends Game{
 		createFrame("Nomination Selection", new Dimension(400,400));
 		popFrame.get(numFrame).setDefaultCloseOperation(0);
 		JPanel main = new JPanel(new GridLayout(3,1));
-		JTextArea text = new JTextArea("Choose a nominee from the list below, that person will be entered in the vote for presidency");
+		JTextArea text = new JTextArea(" Choose a nominee from the list below, that person will be entered in the vote for presidency");
 		text.setLineWrap(true);
 		text.setEditable(false);
 		main.add(text);
@@ -268,13 +279,14 @@ public class Play extends Game{
 		main.add(ok);
 		popFrame.get(numFrame).add(main);
 		
+		
 	}
 	
 	class NominationListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			JComboBox breaker = (JComboBox)e.getSource();
 			int nomindex = breaker.getSelectedIndex();
-			turn.getLocation().getCountry().getDemocracy().addCandidate(candid.get(nomindex));
+			nominee=candid.get(nomindex);
 		}
 	}
 	
@@ -376,8 +388,11 @@ public class Play extends Game{
 	
 	class NominationButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			
-		}
+			turn.getLocation().getCountry().getDemocracy().addCandidate(nominee);
+			popFrame.get(numFrame).dispose();
+			popFrame.remove(numFrame);
+			numFrame--;
+			}
 	}
 	
 	class CountryButtonListener implements ActionListener{

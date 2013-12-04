@@ -51,6 +51,7 @@ public class Play extends Game{
 	private JTextField countryName,governmentName;
 	private String curGovType;
 
+
 	public Play(Character[] ch) {
 		popFrame = new ArrayList<JFrame>();
 		characters = ch;
@@ -107,11 +108,6 @@ public class Play extends Game{
 					&& turnNum==turn.getLocation().getCountry().getDemocracy().ElectionStart()){
 				numFrame++;
 				voteForCandid();
-				Character win =turn.getLocation().getCountry().getDemocracy().finishElection();
-				updateMSG("And the new president of "+ turn.getLocation().getCountry().getDemocracy().getName()
-						+" is "+ win.getName() );
-				turn.getLocation().getCountry().getDemocracy().setLeader(win);
-				
 				
 			}
 		}
@@ -175,7 +171,21 @@ public class Play extends Game{
 			}
 		}
 	}
-		
+		if(turn.getPlaced()){
+		int s=100;
+		ArrayList<Territory> things = turn.getLocation().getNeighbours();
+		for(int i=0; i<numChar;i++){
+			for(int j=0; j<things.size();j++){
+				if(things.get(j).equals(characters[i].getLocation()))
+				s-=20;
+			}
+		}
+		for(int i=0; i<numChar;i++){
+			if(characters[i].getLocation().equals(turn.getLocation()))
+				s=0;
+		}
+		turn.updateHappiness(s);
+		}
 		
 	}
 	
@@ -205,6 +215,15 @@ public class Play extends Game{
 			}
 		}
 	}
+	
+	public void results(){
+		Character win =turn.getLocation().getCountry().getDemocracy().finishElection();
+		updateMSG("And the new president of "+ turn.getLocation().getCountry().getDemocracy().getName()
+				+" is "+ win.getName() );
+		turn.getLocation().getCountry().getDemocracy().setLeader(win);
+		numFrame++;
+		assignCouncil(win);
+		}
 
 	
 	public void settleCountry(String t){
@@ -240,8 +259,8 @@ public class Play extends Game{
 			
 		}
 		
-		else if (e.getKeyCode() == KeyEvent.VK_F){
-			System.out.println(characters[turnNum].getLocation().getName());
+		else if (e.getKeyCode() == KeyEvent.VK_H){
+			updateMSG(turn.getName()+" has happiness "+ turn.getHappyTotal());
 		}
 	}
 	
@@ -313,6 +332,33 @@ public class Play extends Game{
 		popFrame.get(numFrame).add(main);
 	}
 	
+	public void assignCouncil(Character l){
+		createFrame("AssignCouncil", new Dimension (400,400));
+		popFrame.get(numFrame).setDefaultCloseOperation(0);
+		JPanel main = new JPanel(new GridLayout(3,1));
+		JTextArea text = new JTextArea(" Congradulations "+l.getName()+", your the president. Now choose your council");
+		text.setLineWrap(true);
+		text.setEditable(false);
+		main.add(text);
+		JPanel choosePan = new JPanel();
+		String[] names=new String[numChar];
+		for(int i=0; i<numChar;i++){
+			if(characters[i].getLocation().equals(l.getLocation()))
+				names[i]=(characters[i].getName());
+		}
+		JComboBox council = new JComboBox(names);
+		council.setSelectedIndex(-1);
+		council.addActionListener(new CouncilListener());
+		choosePan.add(council);
+		main.add(choosePan);
+		JButton ok = new JButton("Ok");
+		ok.setActionCommand("ok");
+		ok.addActionListener(new CouncilButtonListener());
+		main.add(ok);
+		popFrame.get(numFrame).add(main);
+		
+	}
+	
 	public void nominatePlayers(){
 		createFrame("Nomination Selection", new Dimension(400,400));
 		popFrame.get(numFrame).setDefaultCloseOperation(0);
@@ -344,6 +390,20 @@ public class Play extends Game{
 		
 	}
 	
+	class CouncilListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			JComboBox breaker = (JComboBox)e.getSource();
+			String name = (String)breaker.getSelectedItem();
+			for(int i=0; i<numChar;i++){
+				if(name.equals(characters[i].getName())){
+					characters[i].getLocation().getCountry().getDemocracy().addCouncilMem(characters[i]);
+					updateMSG(characters[i].getName() +" is a counciller");
+					characters[i].updateStatus("coun");
+				}
+			}
+		}
+	}
+	
 	class NominationListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			JComboBox breaker = (JComboBox)e.getSource();
@@ -360,6 +420,8 @@ public class Play extends Game{
 			popFrame.get(numFrame).dispose();
 			popFrame.remove(numFrame);
 			numFrame--;
+			if(turnNum==turn.getLocation().getCountry().getDemocracy().ElectionStart())
+				results();
 		}
 	}
 	
@@ -459,10 +521,16 @@ public class Play extends Game{
 		}
 	}
 	
+	class CouncilButtonListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			popFrame.get(numFrame).dispose();
+			popFrame.remove(numFrame);
+			numFrame--;
+		}
+	}
+	
 	class NominationButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			System.out.println("!!!!!!!!!!!!!!"+nominee);
-			System.out.println(nominee.getName());
 			turn.getLocation().getCountry().getDemocracy().addCandidate(nominee);
 			popFrame.get(numFrame).dispose();
 			popFrame.remove(numFrame);

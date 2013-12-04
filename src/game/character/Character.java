@@ -28,6 +28,17 @@ public class Character{
         coord = new Coord(0, 0);
     }
 
+    public void updateHappiness(int s){
+    	int p=0;
+    	if(president) p=100;
+    	else if(councilMem)p=50;
+    	happy.updateTotal(p, 0, s);
+    }
+    
+    public int getHappyTotal(){
+    	return happy.getTotal();
+    }
+    
     public Territory getLocation(){
             return location;
     }

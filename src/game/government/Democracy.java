@@ -54,7 +54,7 @@
 	      while(i<votes.length){
 	        if(votes[i] == null){
 	          votes[i] = vote;
-	          System.out.println(votes[i]);
+	          System.out.println(votes[i]+i);
 	          i=votes.length;
 	        }
 	        i=i+1;
@@ -64,9 +64,6 @@
 	    public void addCandidate(Character can){//adds candidate to election (5 max)
 	      i=0;
 	      while(i<candits.length){
-	    	 if(candits[i]!=null) {
-	    		 if(candits[i].equals(can)) break;
-	    	 }
 	        if(candits[i] == null){
 	          candits[i] = can;
 	          i=candits.length;
@@ -86,8 +83,9 @@
 	      for(int j=0; j < candits.length; j++){
 	    	  votesForCan[j]=0;
 	        for(int k=0; k<votes.length; k++){
-	          if(votes[k]!=null && votes[k].toLowerCase().equals(candits[j])){
+	          if(votes[k]!=null && candits[j]!=null && votes[k].toLowerCase().equals(candits[j].getName().toLowerCase())){
 	            votesForCan[j] = votesForCan[j] + 1;
+	            System.out.println(votesForCan[j]);
 	          }
 	        }
 	      }

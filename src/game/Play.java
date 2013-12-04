@@ -181,7 +181,7 @@ public class Play extends Game{
 			}
 		}
 		for(int i=0; i<numChar;i++){
-			if(characters[i].getLocation().equals(turn.getLocation()))
+			if(characters[i].getLocation().equals(turn.getLocation()) && !characters[i].equals(turn))
 				s=0;
 		}
 		turn.updateHappiness(s);

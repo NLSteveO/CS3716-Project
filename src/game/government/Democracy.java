@@ -15,7 +15,9 @@
     private String curName;
     private Character leader;
     private String govName;
-    private boolean Election=false;
+    private boolean start=false;
+    private int ElectionStart;
+    private boolean Continue=false;
   
 	public Democracy(String Name){
 		  govName=Name;
@@ -27,14 +29,25 @@
 		return govName;
 	}
 	    
-	    public void setupElection() { //starts an election
+	    public void setupElection(int i) { //starts an election
 	      votes = new String[100];
 	      candits = new Character[5];
 	      votesForCan = new int[5];
-	      Election=true;
+	      start=true;
+	      ElectionStart =i;
 	    }
 	    
-	    public boolean isElectionHappening(){return Election;}
+	    public boolean isElectionHappening(){return start;}
+	    
+	    public void continueElection(){
+	    	
+	    	Continue=true;
+	    	start=false;
+	    }
+	    public boolean isElectionContinue(){return Continue;}
+	    
+	    public int ElectionStart(){return ElectionStart;}
+	    
 	    
 	    public void addVote(String vote){//adds a vote for specified candidate (100 max people to vote)
 	      i=0;
@@ -49,15 +62,12 @@
 	    
 	    public void addCandidate(Character can){//adds candidate to election (5 max)
 	      i=0;
-	      System.out.println("11111"+can.getName());
 	      while(i<candits.length){
 	    	 if(candits[i]!=null) {
-	    		 System.out.println("2222"+candits[i].getName()+ i);
 	    		 if(candits[i].equals(can)) break;
 	    	 }
 	        if(candits[i] == null){
 	          candits[i] = can;
-	          System.out.println("3333"+candits[i].getName()+i);
 	          i=candits.length;
 	        }
 	        i = i+1;
@@ -65,11 +75,12 @@
 	    }
 	    
 	    public Character[] getCandidates(){return candits;}
+	    
 	    public Character getResults(){//returns a string with the name of the winner of the election
 	      for(int j=0; j < candits.length; j++){
 	    	  votesForCan[j]=0;
 	        for(int k=0; k<votes.length; k++){
-	          if(votes[k].toLowerCase().equals(candits[j])){
+	          if(votes[k]!=null && votes[k].toLowerCase().equals(candits[j])){
 	            votesForCan[j] = votesForCan[j] + 1;
 	          }
 	        }

@@ -37,7 +37,13 @@ public class Character{
     }
     
     public boolean getSettle(){return settle;}
-    public void changeSettle(boolean b){settle=b;}
+    public void changeSettle(boolean b){
+    	settle=b;
+    	if(b==false){	
+    		settleVotes[0]=0;
+    		settleVotes[1]=0;
+    	}
+    }
     
     public boolean isAllowed(){
     	if(settleVotes[0]==0 && settleVotes[1]==0) return true;

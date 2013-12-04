@@ -91,20 +91,38 @@ public class Play extends Game{
 				isAnyoneSettling=false;
 		}
 		
+		if(turn.getLocation()!=null &&turn.getLocation().getCountry()!=null){ 
+			if( turn.getLocation().getCountry().getGovType()==0 
+				&& turn.getLocation().getCountry().getDemocracy().isElectionContinue()
+					/*&& turnNum!=turn.getLocation().getCountry().getDemocracy().ElectionStart()*/){
+				numFrame++;
+				voteForCandid();
+			}
+		}
 		
-		if(turn.getLocation().getCountry()!=null 
-				&& turn.getLocation().getCountry().getGovType()==0 
-					&& turn.getLocation().getCountry().getDemocracy().isElectionHappening()){
+		
+		if(turn.getLocation()!=null && turn.getLocation().getCountry()!=null){ 
+				if( turn.getLocation().getCountry().getGovType()==0 
+					&& turn.getLocation().getCountry().getDemocracy().isElectionHappening()
+						&& turnNum!=turn.getLocation().getCountry().getDemocracy().ElectionStart()){
 			candid=new ArrayList<Character>();
 			numFrame++;
 			nominatePlayers();
+				}
 		}
-			
 		
-		/**if (turn.timeUp()){
-			turn.changeSettle(false);
-			System.out.println("time up");
-		}*/
+		if(turn.getLocation()!=null &&turn.getLocation().getCountry()!=null){ 
+				if( turn.getLocation().getCountry().getGovType()==0 
+					&& turn.getLocation().getCountry().getDemocracy().isElectionHappening()
+						&& turnNum==turn.getLocation().getCountry().getDemocracy().ElectionStart()){
+			candid=new ArrayList<Character>();
+			numFrame++;
+			nominatePlayers();
+			turn.getLocation().getCountry().getDemocracy().continueElection();
+				}
+		}
+		 
+		
 		
 		if(turn.getSettle()){
 			if(turn.isAllowed()){
@@ -114,7 +132,10 @@ public class Play extends Game{
 				numFrame++;
 				createCountry();
 			}
-			else denyCountry();
+			else{
+				numFrame++;
+			denyCountry();
+			}
 		}
 		
 		ArrayList<Territory> neighbours = new ArrayList<Territory>();
@@ -211,7 +232,7 @@ public class Play extends Game{
 	}
 	
 	public void startElection(){
-		turn.getLocation().getCountry().getDemocracy().setupElection();
+		turn.getLocation().getCountry().getDemocracy().setupElection(turnNum);
 				
 	}
 		
@@ -251,6 +272,29 @@ public class Play extends Game{
 		popFrame.get(numFrame).add(main);
 	}
 	
+	public void voteForCandid(){
+		createFrame("Vote for a candidate", new Dimension(400,400));
+		popFrame.get(numFrame).setDefaultCloseOperation(0);
+		JPanel main = new JPanel(new GridLayout(3,1));
+		JTextArea text = new JTextArea(" Choose a nominee from the list below to vote for your president\n Be careful not to misclick, you only get one attempt");
+		text.setLineWrap(true);
+		text.setEditable(false);
+		main.add(text);
+		JPanel choosePan = new JPanel();
+		Character candidates[] =turn.getLocation().getCountry().getDemocracy().getCandidates();
+		String[] ballet= new String[candidates.length]; 
+		for(int i=0; i<candidates.length;i++){
+			if(ballet[i]!=null)
+			ballet[i]=candidates[i].getName();
+		}
+		JComboBox voter = new JComboBox(ballet);
+		voter.setSelectedIndex(-1);
+		voter.addActionListener(new VoteListener());
+		choosePan.add(voter);
+		main.add(choosePan);
+		popFrame.get(numFrame).add(main);
+	}
+	
 	public void nominatePlayers(){
 		createFrame("Nomination Selection", new Dimension(400,400));
 		popFrame.get(numFrame).setDefaultCloseOperation(0);
@@ -287,6 +331,17 @@ public class Play extends Game{
 			JComboBox breaker = (JComboBox)e.getSource();
 			int nomindex = breaker.getSelectedIndex();
 			nominee=candid.get(nomindex);
+		}
+	}
+	
+	class VoteListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			JComboBox votes = (JComboBox)e.getSource();
+			 String cast = (String)votes.getSelectedItem();
+			turn.getLocation().getCountry().getDemocracy().addVote(cast);
+			popFrame.get(numFrame).dispose();
+			popFrame.remove(numFrame);
+			numFrame--;
 		}
 	}
 	
@@ -416,6 +471,7 @@ public class Play extends Game{
 				numFrame--;
 			}
 			else if("continue".equals(e.getActionCommand())){
+				turn.changeSettle(false);
 				popFrame.get(numFrame).dispose();
 				popFrame.remove(numFrame);
 				numFrame--;
